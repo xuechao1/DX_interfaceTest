@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>html_api_测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.9.1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.common.min.js"></script>
+    <!-- <script type="text/javascript" src="js/echarts.common.min.js"></script> -->
+    
+<style type="text/css" media="screen">
+    body        { font-family: Microsoft YaHei,Consolas,arial,sans-serif; font-size: 80%; }
+    table       { font-size: 100%; }
+    pre         { white-space: pre-wrap;word-wrap: break-word; }
+    /* -- heading ---------------------------------------------------------------------- */
+    h1 {
+        font-size: 16pt;
+        color: gray;
+    }
+    .heading {
+        margin-top: 0ex;
+        margin-bottom: 1ex;
+    }
+    .heading .attribute {
+        margin-top: 1ex;
+        margin-bottom: 0;
+    }
+    .heading .description {
+        margin-top: 2ex;
+        margin-bottom: 3ex;
+    }
+    /* -- css div popup ------------------------------------------------------------------------ */
+    a.popup_link {
+    }
+    a.popup_link:hover {
+        color: red;
+    }
+    .popup_window {
+        display: none;
+        position: relative;
+        left: 0px;
+        top: 0px;
+        /*border: solid #627173 1px; */
+        padding: 10px;
+        /*background-color: #E6E6D6; */
+        font-family: "Lucida Console", "Courier New", Courier, monospace;
+        text-align: left;
+        font-size: 8pt;
+        /* width: 500px;*/
+    }
+    }
+    /* -- report ------------------------------------------------------------------------ */
+    #show_detail_line {
+        margin-top: 3ex;
+        margin-bottom: 1ex;
+    }
+    #result_table {
+        width: 99%;
+    }
+    #header_row {
+        font-weight: bold;
+        color: #303641;
+        background-color: #ebebeb;
+    }
+    #total_row  { font-weight: bold; }
+    .passClass  { background-color: #bdedbc; }
+    .failClass  { background-color: #ffefa4; }
+    .errorClass { background-color: #ffc9c9; }
+    .passCase   { color: #6c6; }
+    .failCase   { color: #FF6600; font-weight: bold; }
+    .errorCase  { color: #c00; font-weight: bold; }
+    .hiddenRow  { display: none; }
+    .testcase   { margin-left: 2em; }
+    /* -- ending ---------------------------------------------------------------------- */
+    #ending {
+    }
+    #div_base {
+                position:absolute;
+                top:0%;
+                left:5%;
+                right:5%;
+                width: auto;
+                height: auto;
+                margin: -15px 0 0 0;
+    }
+</style>
+
+</head>
+<body>
+    <script language="javascript" type="text/javascript"><!--
+    output_list = Array();
+    /* level - 0:Summary; 1:Failed; 2:All */
+    function showCase(level) {
+        trs = document.getElementsByTagName("tr");
+        for (var i = 0; i < trs.length; i++) {
+            tr = trs[i];
+            id = tr.id;
+            if (id.substr(0,2) == 'ft') {
+                if (level < 1) {
+                    tr.className = 'hiddenRow';
+                }
+                else {
+                    tr.className = '';
+                }
+            }
+            if (id.substr(0,2) == 'pt') {
+                if (level > 1) {
+                    tr.className = '';
+                }
+                else {
+                    tr.className = 'hiddenRow';
+                }
+            }
+        }
+    }
+    function showClassDetail(cid, count) {
+        var id_list = Array(count);
+        var toHide = 1;
+        for (var i = 0; i < count; i++) {
+            tid0 = 't' + cid.substr(1) + '.' + (i+1);
+            tid = 'f' + tid0;
+            tr = document.getElementById(tid);
+            if (!tr) {
+                tid = 'p' + tid0;
+                tr = document.getElementById(tid);
+            }
+            id_list[i] = tid;
+            if (tr.className) {
+                toHide = 0;
+            }
+        }
+        for (var i = 0; i < count; i++) {
+            tid = id_list[i];
+            if (toHide) {
+                document.getElementById('div_'+tid).style.display = 'none'
+                document.getElementById(tid).className = 'hiddenRow';
+            }
+            else {
+                document.getElementById(tid).className = '';
+            }
+        }
+    }
+    function showTestDetail(div_id){
+        var details_div = document.getElementById(div_id)
+        var displayState = details_div.style.display
+        // alert(displayState)
+        if (displayState != 'block' ) {
+            displayState = 'block'
+            details_div.style.display = 'block'
+        }
+        else {
+            details_div.style.display = 'none'
+        }
+    }
+    function html_escape(s) {
+        s = s.replace(/&/g,'&amp;');
+        s = s.replace(/</g,'&lt;');
+        s = s.replace(/>/g,'&gt;');
+        return s;
+    }
+    /* obsoleted by detail in <div>
+    function showOutput(id, name) {
+        var w = window.open("", //url
+                        name,
+                        "resizable,scrollbars,status,width=800,height=450");
+        d = w.document;
+        d.write("<pre>");
+        d.write(html_escape(output_list[id]));
+        d.write("\n");
+        d.write("<a href='javascript:window.close()'>close</a>\n");
+        d.write("</pre>\n");
+        d.close();
+    }
+    */
+    --></script>
+    <div id="div_base">
+        
+    <div class='page-header'>
+        <h1>html_api_测试报告</h1>
+    <p class='attribute'><strong>开始时间:</strong> 2020-06-23 17:51:36</p>
+<p class='attribute'><strong>运行时长:</strong> 0:00:19.909000</p>
+<p class='attribute'><strong>状态:</strong> 通过 15</p>
+
+    </div>
+    <div style="float: left;width:50%;"><p class='description'></p></div>
+    <div id="chart" style="width:50%;height:400px;float:left;"></div>
+
+        
+    <div class="btn-group btn-group-sm">
+        <button class="btn btn-default" onclick='javascript:showCase(0)'>总结</button>
+        <button class="btn btn-default" onclick='javascript:showCase(1)'>失败</button>
+        <button class="btn btn-default" onclick='javascript:showCase(2)'>全部</button>
+    </div>
+    <p></p>
+    <table id='result_table' class="table table-bordered">
+        <colgroup>
+            <col align='left' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+        </colgroup>
+        <tr id='header_row'>
+            <td>测试套件/测试用例</td>
+            <td>总数</td>
+            <td>通过</td>
+            <td>失败</td>
+            <td>错误</td>
+            <td>查看</td>
+        </tr>
+        
+    <tr class='passClass'>
+        <td>testCase.TestInnovel.TestInnovel</td>
+        <td>15</td>
+        <td>15</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c1',15)">详情</a></td>
+    </tr>
+
+<tr id='pt1.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_001_visitor_login</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.1')" >
+        通过</a>
+    <div id='div_pt1.1' class="popup_window">
+        <pre>pt1.1: ----开始执行测试用例  start ----
+----测试游客用户能正常登录APP的功能----
+{'dataJson': {'isRegister': False,
+              's': 'eyJrIjoiNzZkNTc0ZDhlMDM3NzhiZGI2ZWVjMmE4MDQ4ZDBmZjUiLCJTIjoiamluZ3l1IiwidiI6IjEuMCIsImEiOjEsIkwiOjEwLCJsIjoxNTkyOTA1ODkzLCJyIjowLCJzIjoiYTI0ODExYTgzMGE0MjM3MGM0OTZiMzEzNjBiNjQ5NjkifQ==',
+              'u': 'eyJxIjoiNDI5NjAwMDM2MyIsIk0iOiIiLCJuIjoiSEZSRTQyOTYwMDAzNjMiLCJpIjoiIiwicyI6IjAiLCJtIjoxNTkyOTA0ODg3LCJjIjoxNTkxNDI2MTc0LCJiIjoiIiwiZSI6IiIsImlzQXV0aG9yIjpmYWxzZX0='},
+ 'msg': '',
+ 'show': False,
+ 'status': 0}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_002_library_reading</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.2')" >
+        通过</a>
+    <div id='div_pt1.2' class="popup_window">
+        <pre>pt1.2: ----开始执行测试用例  start ----
+----在书城页面，选择任意一本书籍，测试能正常阅读的功能----
+{'status': 0, 'dataJson': {'banner': [], 'seed': 4190763, 'list': [{'type': '3227', 'name': 'we are work', 'columnId': '1569', 'descr': '', 'displayType': 1, 'subTitle': '', 'columnType': 1, 'columnBackUrl': '', 'showRankNum': True, 'readIconType': 1, 'list': [{'id': 'Wfelz/zKP5a5exy9VX0o9A==', 'name': 'Air Mata Maharani ( complete )', 'imageUrl': 'http://file.dreame.com/images/8a1bf75dddb5bcffcea07df07999427c/1976083.jpg', 'authorName': 'Vennia Lestari', 'readNum': '38989', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 't8sPWyDDwFSRSHzvmGe/Bg==', 'name': 'Menunggu Malam', 'imageUrl': 'http://file.dreame.com/images/30fe8fd01a689cbd58b069d950a49068/1976265.jpg', 'authorName': 'Miyak Seya', 'readNum': '4935', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'soGwowMH/4pLnfffc++e4w==', 'name': 'My Disaster CEO', 'imageUrl': 'http://file.dreame.com/group1/M00/02/94/rB84XV3wKbWARe-4AAOg6iUNi9k249_208x300.jpg', 'authorName': 'AiraYM', 'readNum': '1997', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': '+eIiuygRJhQ8z642SflqFA==', 'name': 'Sean and Sonia: Deceitfullness (Bahasa Indonesia)', 'imageUrl': 'http://file.dreame.com/group1/M00/00/20/rB84X1zTy_mAYNxlAAPgLI3EMZk932_208x300.png', 'authorName': 'itsme juvenlaff', 'readNum': '9537', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'xRxj5/APmTQQnwSCrquj8A==', 'name': 'My Mysterious Boss Is My Love At The First Sight', 'imageUrl': 'http://file.dreame.com/group1/M00/01/B2/rB84XV1WVaeACftOAAFFY5XhcKE835_208x300.jpg', 'authorName': 'Astrid Kei', 'readNum': '11734', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': '+zg1IV2S1UYh1wE6c5sADQ==', 'name': 'KAYVAN VS ICE GIRL', 'imageUrl': 'http://file.dreame.com/group1/M00/01/23/rB84XVzdfbOALR2_AADm3ZNbKTU774_208x300.jpg', 'authorName': 'Henzsadewa', 'readNum': '681', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': '6YFkdb88E9b2rH6y+NuGcw==', 'name': "I'M NOT A PELAKOR", 'imageUrl': 'http://file.dreame.com/group1/M00/01/FC/rB84XV2MTiKATYWMAAAtuU8V9Vg125_208x300.jpg', 'authorName': 'Khody Didi', 'readNum': '4884', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'lCRzjMU+mtFP5DBTkin4og==', 'name': 'I CAN [T] -BAHASA INDONESIA-', 'imageUrl': 'http://file.dreame.com/group1/M00/02/A2/rB84XV3yTKqAQ7ZzABCN7l8io78837_208x300.png', 'authorName': 'El BryanBrunch', 'readNum': '16342', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': '3ZpCE5N4l2jHFMRXODZddw==', 'name': 'MY BABY TWINS AND DEVIL ', 'imageUrl': 'http://file.dreame.com/group1/M00/01/FE/rB84dl2OGJaAEHi8AABdnrtI-m4673_208x300.jpg', 'authorName': 'QueenDee ', 'readNum': '5710', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'WmKO+TkCSc3DSBixAkQjyw==', 'name': 'Pelayan Sang Pangeran (Indonesia)', 'imageUrl': 'http://file.dreame.com/group1/M00/02/6E/rB84XV3aQu2AKLSvAAIUTOG8CqU072_208x300.jpg', 'authorName': 'Li_Aprilia', 'readNum': '4021', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}]}, {'type': '3223', 'name': 'Dreame Best', 'columnId': '1999', 'descr': 'Ranking of the most unmissable stories', 'displayType': 5, 'subTitle': 'test you are beautiful', 'columnType': 1, 'columnBackUrl': '', 'showRankNum': True, 'readIconType': 1, 'list': [{'id': 'NhmnOPFGjdm+NOfT+6E/vw==', 'name': 'My (not) Perfect Wedding', 'imageUrl': 'http://file.dreame.com/images/3123691d82fda35dcb80052251b49bc5/1976934.jpg', 'authorName': 'Siska Sihombing', 'readNum': '14675', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'pIwlMe45sstT9XtcxD56Jw==', 'name': 'HELP ME (BAHASA INDONESIA)', 'imageUrl': 'http://file.dreame.com/group1/M00/02/81/rB84XV3k_LGAJFhyAAQeHhFsWNM236_208x300.jpg', 'authorName': 'NUR EVA LAILY', 'readNum': '1423912', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'hQL8fInlw+9ANHRWy4QZMA==', 'name': 'Taste Me, Sir! (INDONESIA)', 'imageUrl': 'http://file.dreame.com/group1/M00/02/12/rB84dl2e5NSAaqDJABOQVlZWm0I303_208x300.jpg', 'authorName': 'GULZRD', 'readNum': '30559', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'USj98dWXOhYG87Re8c+rXA==', 'name': 'Sepenggal Kisah Gama ( Indonesia )', 'imageUrl': 'http://file.dreame.com/group1/M00/02/74/rB84dl3cbZSAW7XEAANHO69TOoI855_208x300.jpg', 'authorName': 'Ncheet Nca', 'readNum': '666437', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'A/yDBQoCpukQjmkn4oFDBQ==', 'name': 'My Sweetest Enemy ', 'imageUrl': 'http://file.dreame.com/images/14b8038cc31cd3a3372523116bb3a845/1976039.jpg', 'authorName': 'Ekanandadera', 'readNum': '11311', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'nJ7yzMeh3IThLACA84MHdQ==', 'name': 'CEO Mesum itu Suamiku [bahasa Indonesia] ', 'imageUrl': 'http://file.dreame.com/group1/M00/02/8F/rB84dl3tgWaAS2SoAAGA14PLedM19_208x300.jpeg', 'authorName': 'Pecinta Mimpi (@penastory)', 'readNum': '602950', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'YBIWHr5qCNAtbL2TA5Ns2Q==', 'name': 'DRIVING ME MAD (INDONESIA)', 'imageUrl': 'http://file.dreame.com/group1/M00/02/84/rB84dl3nB2WAcb3MAADd1eSFohQ067_208x300.jpg', 'authorName': 'Orihim3', 'readNum': '126427', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'FYoNUpvjwIg7Tjcm1dMPyQ==', 'name': 'Twenty VS Thirty [bahasa Indonesia] ', 'imageUrl': 'http://file.dreame.com/group1/M00/02/8E/rB84XV3tHLmASg12AAHkvH8uJtE79_208x300.jpeg', 'authorName': 'Pecinta Mimpi (@penastory)', 'readNum': '123178', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'rliDrL4IbXZfTBxihGdJQw==', 'name': 'Perfect Honeymoon (Indonesia)', 'imageUrl': 'http://file.dreame.com/group1/M00/02/77/rB84dl3elVOAAxh-AATQBYPRAxQ688_208x300.jpg', 'authorName': 'desstinna1201', 'readNum': '4367578', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': '4ioABycibBCnhlzoz+z+jw==', 'name': 'Delivery Love (Indonesia)', 'imageUrl': 'http://file.dreame.com/group1/M00/02/75/rB84dl3cuhiAbcyuAARwhet4i-w110_208x300.jpg', 'authorName': 'desstinna1201', 'readNum': '159185', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 't8Am1Amn8nNdIoUmcIx99Q==', 'name': 'Bittersweet Legacy', 'imageUrl': 'http://file.dreame.com/group1/M00/01/9D/rB84dl1LCRmAXDbUAABgwyvU5DE622_208x300.jpg', 'authorName': 'rapsodiary', 'readNum': '17947', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'Ke0UdVErcaT+Vw6JXzmTZw==', 'name': 'DOKTER VS LAWYER', 'imageUrl': 'http://file.dreame.com/group1/M00/01/DD/rB84XV1zkeuAbOpXAAsOUjVt7c4644_208x300.png', 'authorName': 'lynagabrielangga', 'readNum': '18383', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}]}, {'type': '3224', 'name': 'Top Romance', 'columnId': '1566', 'descr': '123,mu tou ren', 'displayType': 1, 'subTitle': '123,mu tou ren', 'columnType': 5, 'columnBackUrl': '', 'showRankNum': True, 'readIconType': 1, 'list': [{'id': 'kydFglYHXLaQDOwjXLXHeg==', 'name': 'Inevitable Destiny', 'imageUrl': 'http://file.dreame.com/group1/M00/01/F4/rB84XV2FefWAfOTXAAGFtQIWUUo140_208x300.jpg', 'authorName': 'Pinetreeforest', 'readNum': '13135', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'C1lhLsdAR3SVDQTqNdtS9A==', 'name': 'Young Marriage', 'imageUrl': 'http://file.dreame.com/group1/M00/02/34/rB84XV24SXCADH8vAANOCo7tqR0023_208x300.jpg', 'authorName': 'CACASTORY', 'readNum': '7818', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'EAP4zuNWJGloW/F+xOBPfw==', 'name': 'Your Baby, Not His Son', 'imageUrl': 'http://file.dreame.com/group1/M00/02/0D/rB84XV2a5bCAf_SKAAfvTCoi2QQ110_208x300.png', 'authorName': 'Di_evil', 'readNum': '5484', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'NUTDFNR+aNIZ6vLzwImguA==', 'name': 'Married by Accident 2', 'imageUrl': 'http://file.dreame.com/images/8c6926840d03d40b349ad98de6075720/1972501.jpg', 'authorName': 'gege hesty', 'readNum': '23918', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'jo9hpKsQ/bP0D1kVPFIqew==', 'name': 'Kalista: Yang Terbuang ( Bahasa Indonesia )', 'imageUrl': 'http://file.dreame.com/group1/M00/02/07/rB84XV2WFgKAMN-9AAUFo-FIh_Q49_208x300.jpeg', 'authorName': 'rieka tresna', 'readNum': '33728', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'sbKtJ0ZG5sBPqLa2g0/DTg==', 'name': 'The Somplak Couple', 'imageUrl': 'http://file.dreame.com/group1/M00/01/D6/rB84XV1trnmAXfp7ABXsWJe4I4Y874_208x300.jpg', 'authorName': 'Sky Of Love', 'readNum': '6281', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'v1kHS4UCWQFydvJdRSh2Tg==', 'name': 'A TWIST OF FATE', 'imageUrl': 'http://file.dreame.com/group1/M00/01/77/rB84XV0zyKeARMRHAACg6_nGjS0286_208x300.jpg', 'authorName': 'Mikas4', 'readNum': '7656', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'quZby8zL+UXdCH1C/28XTg==', 'name': 'HELLO KAPTEN (INDONESIA)', 'imageUrl': 'http://file.dreame.com/group1/M00/02/1A/rB84dl2lE1iAdssYAAA-ecjJQQU001_208x300.jpg', 'authorName': 'Bella Mutiarawati', 'readNum': '5747', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'TUwPnLmtYUWBnl0zzwuEcg==', 'name': 'Sweet Revenge (Indonesia)', 'imageUrl': 'http://file.dreame.com/group1/M00/01/90/rB84dl1F0fCACtuiAAG2cvkKICk899_208x300.jpg', 'authorName': 'Alice Gio', 'readNum': '15099', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'lhFQuonox78IS/dwPMQ4Zw==', 'name': 'JEDA', 'imageUrl': 'http://file.dreame.com/group1/M00/01/D7/rB84XV1udx-AXPiBAAHJgNZJSAY410_208x300.jpg', 'authorName': 'juliehasjiem', 'readNum': '21649', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'QjT4+gyvYfreWNB4fu9hZA==', 'name': 'MOMMY', 'imageUrl': 'http://file.dreame.com/group1/M00/02/27/rB84XV2u4nGAKv-mAABYrSIJIbY055_208x300.jpg', 'authorName': 'KecoakTercyduk', 'readNum': '5707', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'VhsTgZFMztR8CD7t16e4MQ==', 'name': 'The Fault', 'imageUrl': 'http://file.dreame.com/group1/M00/01/FE/rB84dl2OMjqALwFhAAaGti5Nuy8326_208x300.jpg', 'authorName': 'Nova Adhita Siswanto', 'readNum': '16649', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}]}, {'type': '3225', 'name': 'Completed Story', 'columnId': '1568', 'descr': '', 'displayType': 1, 'subTitle': '', 'columnType': 1, 'columnBackUrl': '', 'showRankNum': True, 'readIconType': 1, 'list': [{'id': 'g29gyyCgKRAubp8KstO/2Q==', 'name': 'I Am Alpha Mate(Indonesian)', 'imageUrl': 'http://file.dreame.com/images/c2d7cc897238517ef43068cf539689bf/1976542.jpg', 'authorName': 'Won', 'readNum': '4192', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': '4QHotpx59jCOj9Ef8qtVWQ==', 'name': 'Survive', 'imageUrl': 'http://file.dreame.com/images/3698296e2feb8a263487938336779c4a/1976267.jpg', 'authorName': 'Miyak Seya', 'readNum': '7076', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'KXP6r7D2Isyln6kR3Eve6w==', 'name': 'Accidentally Love', 'imageUrl': 'http://file.dreame.com/group1/M00/02/23/rB84XV2sNMGAUy5EAANdJ5Wyw2o711_208x300.png', 'authorName': 'Mamak Muda', 'readNum': '2496', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'EQrjos0hiZg4Z05Vao687Q==', 'name': "Arin's Wedding", 'imageUrl': 'http://file.dreame.com/images/7ab925f779741489764c5610e55e2b48/1976852.jpg', 'authorName': 'Siska Sihombing', 'readNum': '10992', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'PClH79xEy5dVH2xuCYsSPw==', 'name': 'Kaleidoscope (Indonesia)', 'imageUrl': 'http://file.dreame.com/group1/M00/01/2F/rB84dlz029aAe7BTAAa3CAQZV0o123_208x300.png', 'authorName': 'Abigail Prasetyo', 'readNum': '2493', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'kXDN5fdTHdeTbJS9tISSFQ==', 'name': 'To Get Her', 'imageUrl': 'http://file.dreame.com/images/c7773138732a1439b680bd249906f2ca/1973134.jpg', 'authorName': 'choco-top', 'readNum': '1257', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'gQJCNVzB7sf8OBsEPv2FVQ==', 'name': 'My Doctor is My Imam', 'imageUrl': 'http://file.dreame.com/images/0351ec904a594258635a4d1c3a926e57/1975799.jpg', 'authorName': '티키래라', 'readNum': '12299', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'WWySv7Oirw1Ia01mBocqvw==', 'name': 'DAVINO', 'imageUrl': 'http://file.dreame.com/group1/M00/01/B2/rB84XV1WVq2Ad2RlAAPOXzWtiV8304_208x300.jpg', 'authorName': 'CHACHARAMEL', 'readNum': '2504', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'zc76b0Sra9TwwFVCoCkMDw==', 'name': 'Beautiful Statue (Indonesia)', 'imageUrl': 'http://file.dreame.com/group1/M00/01/2F/rB84XVz03t-AcwyBAAVRd2-fecs721_208x300.png', 'authorName': 'Abigail Prasetyo', 'readNum': '18275', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'ohAcSjfZIjw4y6BEUXgQAw==', 'name': "DEVIANA'S WORLD (BAHASA INDONESIA)", 'imageUrl': 'http://file.dreame.com/group1/M00/01/FC/rB84XV2MOKCAQ67TAAWQ60mZS0c657_208x300.jpg', 'authorName': 'Indra Wahyuni', 'readNum': '5777', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}]}, {'type': '3228', 'name': 'who are yhou', 'columnId': '1567', 'descr': '', 'displayType': 1, 'subTitle': '', 'columnType': 1, 'columnBackUrl': '', 'showRankNum': True, 'readIconType': 1, 'list': [{'id': 'v1kHS4UCWQFydvJdRSh2Tg==', 'name': 'A TWIST OF FATE', 'imageUrl': 'http://file.dreame.com/group1/M00/01/77/rB84XV0zyKeARMRHAACg6_nGjS0286_208x300.jpg', 'authorName': 'Mikas4', 'readNum': '7656', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'C1lhLsdAR3SVDQTqNdtS9A==', 'name': 'Young Marriage', 'imageUrl': 'http://file.dreame.com/group1/M00/02/34/rB84XV24SXCADH8vAANOCo7tqR0023_208x300.jpg', 'authorName': 'CACASTORY', 'readNum': '7818', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'unvISohT11qctJ0qp8ocXw==', 'name': 'MAMMAMIA (Aku Patah Hati)', 'imageUrl': 'http://file.dreame.com/group1/M00/01/D8/rB84dl1vXWiAXsYUAAA_I1iI6F4463_208x300.jpg', 'authorName': 'juliehasjiem', 'readNum': '10012', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': '6AbzvHX+lkVtpS+8cLMkvQ==', 'name': 'The Hottest Teacher', 'imageUrl': 'http://file.dreame.com/images/4e0acc6dce0632c579c81960889b9b2c/1972889.jpg', 'authorName': 'Moi Yulie  (Kireinaaa)', 'readNum': '28935', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'x+Z4gWAecTRGshvRf+wYWQ==', 'name': 'When Love Meets season 3 18+', 'imageUrl': 'http://file.dreame.com/group1/M00/01/58/rB84dl0cUmGAM0TQAA_kYlVcNh8684_208x300.png', 'authorName': 'shineamanda9', 'readNum': '6814', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'g3vE30YL+MrBROQxUO1PHA==', 'name': 'ILLUNA', 'imageUrl': 'http://file.dreame.com/group1/M00/02/13/rB84XV2gH8OAZF9aAAD5tHxtgjQ590_208x300.jpg', 'authorName': 'ladiesmajaa', 'readNum': '5075', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'VhsTgZFMztR8CD7t16e4MQ==', 'name': 'The Fault', 'imageUrl': 'http://file.dreame.com/group1/M00/01/FE/rB84dl2OMjqALwFhAAaGti5Nuy8326_208x300.jpg', 'authorName': 'Nova Adhita Siswanto', 'readNum': '16649', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'lrWl9APMl2vRSbzBLSGEGg==', 'name': 'Jingga (Indonesia)', 'imageUrl': 'http://file.dreame.com/group1/M00/01/9B/rB84XV1JY7qAMRJ-AAFTGRb2f0I826_208x300.jpg', 'authorName': 'Noviyadep', 'readNum': '5980', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'aSPPRxXAT1bWgb+Rs9zFQA==', 'name': 'Overprotective Husband [Indonesia]', 'imageUrl': 'http://file.dreame.com/group1/M00/02/A9/rB84XV31h5iAcFz_AAIOp2qjYL8023_208x300.jpg', 'authorName': 'SitiKholifaahh', 'readNum': '14811', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'jfv2gAY1DNspGstL6pTelQ==', 'name': 'Bolehkah Aku Mencintaimu (Bahasa Indonesia)', 'imageUrl': 'http://file.dreame.com/group1/M00/02/8D/rB84XV3sXhWANlQUAACCz5T7BJg481_208x300.jpg', 'authorName': 'Bunda Snow', 'readNum': '40288', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}]}, {'type': '3229', 'name': 'Hot Tags', 'columnId': '1088', 'descr': '', 'displayType': 3, 'subTitle': '', 'columnType': 1, 'columnBackUrl': '', 'showRankNum': True, 'readIconType': 1, 'list': [{'id': 2, 'name': 'Adventure'}, {'id': '501', 'name': 'Drama'}, {'id': '201', 'name': 'Possessive'}, {'id': '58', 'name': 'Sex'}, {'id': '27', 'name': 'Romance'}, {'id': '507', 'name': 'Sweet'}, {'id': '4', 'name': 'Billionaire'}, {'id': '39', 'name': 'Werewolf'}, {'id': '213', 'name': 'Goodgirl'}, {'id': '224', 'name': 'Powerful'}]}, {'type': '3231', 'name': 'innovel-test', 'columnId': '1999', 'descr': 'Ranking of the most unmissable stories', 'displayType': 5, 'subTitle': '', 'columnType': 1, 'columnBackUrl': '', 'showRankNum': True, 'readIconType': 1, 'list': [{'id': 'NhmnOPFGjdm+NOfT+6E/vw==', 'name': 'My (not) Perfect Wedding', 'imageUrl': 'http://file.dreame.com/images/3123691d82fda35dcb80052251b49bc5/1976934.jpg', 'authorName': 'Siska Sihombing', 'readNum': '14675', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'pIwlMe45sstT9XtcxD56Jw==', 'name': 'HELP ME (BAHASA INDONESIA)', 'imageUrl': 'http://file.dreame.com/group1/M00/02/81/rB84XV3k_LGAJFhyAAQeHhFsWNM236_208x300.jpg', 'authorName': 'NUR EVA LAILY', 'readNum': '1423912', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'hQL8fInlw+9ANHRWy4QZMA==', 'name': 'Taste Me, Sir! (INDONESIA)', 'imageUrl': 'http://file.dreame.com/group1/M00/02/12/rB84dl2e5NSAaqDJABOQVlZWm0I303_208x300.jpg', 'authorName': 'GULZRD', 'readNum': '30559', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'USj98dWXOhYG87Re8c+rXA==', 'name': 'Sepenggal Kisah Gama ( Indonesia )', 'imageUrl': 'http://file.dreame.com/group1/M00/02/74/rB84dl3cbZSAW7XEAANHO69TOoI855_208x300.jpg', 'authorName': 'Ncheet Nca', 'readNum': '666437', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'A/yDBQoCpukQjmkn4oFDBQ==', 'name': 'My Sweetest Enemy ', 'imageUrl': 'http://file.dreame.com/images/14b8038cc31cd3a3372523116bb3a845/1976039.jpg', 'authorName': 'Ekanandadera', 'readNum': '11311', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'nJ7yzMeh3IThLACA84MHdQ==', 'name': 'CEO Mesum itu Suamiku [bahasa Indonesia] ', 'imageUrl': 'http://file.dreame.com/group1/M00/02/8F/rB84dl3tgWaAS2SoAAGA14PLedM19_208x300.jpeg', 'authorName': 'Pecinta Mimpi (@penastory)', 'readNum': '602950', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'YBIWHr5qCNAtbL2TA5Ns2Q==', 'name': 'DRIVING ME MAD (INDONESIA)', 'imageUrl': 'http://file.dreame.com/group1/M00/02/84/rB84dl3nB2WAcb3MAADd1eSFohQ067_208x300.jpg', 'authorName': 'Orihim3', 'readNum': '126427', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'FYoNUpvjwIg7Tjcm1dMPyQ==', 'name': 'Twenty VS Thirty [bahasa Indonesia] ', 'imageUrl': 'http://file.dreame.com/group1/M00/02/8E/rB84XV3tHLmASg12AAHkvH8uJtE79_208x300.jpeg', 'authorName': 'Pecinta Mimpi (@penastory)', 'readNum': '123178', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'rliDrL4IbXZfTBxihGdJQw==', 'name': 'Perfect Honeymoon (Indonesia)', 'imageUrl': 'http://file.dreame.com/group1/M00/02/77/rB84dl3elVOAAxh-AATQBYPRAxQ688_208x300.jpg', 'authorName': 'desstinna1201', 'readNum': '4367578', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': '4ioABycibBCnhlzoz+z+jw==', 'name': 'Delivery Love (Indonesia)', 'imageUrl': 'http://file.dreame.com/group1/M00/02/75/rB84dl3cuhiAbcyuAARwhet4i-w110_208x300.jpg', 'authorName': 'desstinna1201', 'readNum': '159185', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 't8Am1Amn8nNdIoUmcIx99Q==', 'name': 'Bittersweet Legacy', 'imageUrl': 'http://file.dreame.com/group1/M00/01/9D/rB84dl1LCRmAXDbUAABgwyvU5DE622_208x300.jpg', 'authorName': 'rapsodiary', 'readNum': '17947', 'status': '1', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}, {'id': 'Ke0UdVErcaT+Vw6JXzmTZw==', 'name': 'DOKTER VS LAWYER', 'imageUrl': 'http://file.dreame.com/group1/M00/01/DD/rB84XV1zkeuAbOpXAAsOUjVt7c4644_208x300.png', 'authorName': 'lynagabrielangga', 'readNum': '18383', 'status': '0', 'descr': '', 'discount': 1, 'languageIconUrl': 'http://file.dreame.com/group1/M00/01/D5/rB84dl1su_KAbkIOAAAA0_9sTxY426.png', 'bookType': '1'}]}], 'subChannels': [{'id': '137', 'name': 'test'}]}, 'msg': 'Success', 'show': False}
+----------------book details -------------------
+{'dataJson': {'authorWords': '',
+              'bookId': '3TXM0/mmzB0r6NeOsPRhmg==',
+              'content': 'qv8jfsL2G3U=',
+              'id': 'vP22tN7fHy4nfPWt0a3RAw==',
+              'isbuyed': True,
+              'leftTime': -1,
+              'pubTime': 1571401623,
+              'startTiming': False},
+ 'msg': '',
+ 'show': False,
+ 'status': 0}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.3' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_003_library_book_follow</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.3')" >
+        通过</a>
+    <div id='div_pt1.3' class="popup_window">
+        <pre>pt1.3: ----开始执行测试用例  start ----
+----在书城页面，选择任意一本书籍，测试能正常进行收藏操作的功能----
+{'status': 0, 'dataJson': {'list': {'type': 1, 'bid': '3TXM0/mmzB0r6NeOsPRhmg==', 'cover': 'http://file.dreame.com/group1/M00/02/20/rB84XV2ps8GAPCG1AAYZlrrnU0A794_208x300.jpg', 'name': 'Love in The Apartment', 'upchapter': 'Bagian Terakhir', 'chapters_count': '18', 'cat_id': '17', 'author_name': 'hanumnabila', 'charge_type': '0', 'isUpdatedCommend': '0', 'isPackage': 0, 'isLaterUnLock': 0, 'laterUnLockNum': 0, 'bookType': '1', 'is_del': '99', 'upchapter_time': 1572195600}}, 'msg': '', 'show': False}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.4' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_004_library_book_unfollow</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.4')" >
+        通过</a>
+    <div id='div_pt1.4' class="popup_window">
+        <pre>pt1.4: ----开始执行测试用例  start ----
+----在书城界面，选择任意一本已收藏的书籍，测试其能取消收藏的功能----
+{'dataJson': {}, 'msg': '', 'show': False, 'status': 0}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_005_library_time_list</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.5')" >
+        通过</a>
+    <div id='div_pt1.5' class="popup_window">
+        <pre>pt1.5: ----开始执行测试用例  start ----
+----在书城侧页面，点击右上角的会话按钮，测试其能正常进入到站内信界面的功能----
+{'dataJson': {'message': 1, 'notification': 0},
+ 'msg': 'success',
+ 'show': False,
+ 'status': 0}
+{'dataJson': {'message': [{'create_time': '2020-06-06 06:49:52',
+                           'data': None,
+                           'del': '0',
+                           'id': '47332',
+                           'identify': None,
+                           'is_read': 0,
+                           'jump_type': 1,
+                           'message': 'Welcome to Dreame! Include yourself in '
+                                      'reading a wide variety of genres at '
+                                      'your relaxing moments. Stories daily '
+                                      'updates to keep you up with all the '
+                                      'latest episodes. Thanks for your coming '
+                                      'and making Dreame better. We have added '
+                                      '50 free coins to your account and you '
+                                      'can use them to unlock intriguing '
+                                      'stories. Go and enjoy now!',
+                           'qid': '4296000363',
+                           'sender': 1,
+                           'title': 'Welcome Gift!',
+                           'update_time': '2020-06-06 06:49:52'}],
+              'notification': []},
+ 'msg': 'success',
+ 'show': False,
+ 'status': 0}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.6' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_006_library_get_time_list_content</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.6')" >
+        通过</a>
+    <div id='div_pt1.6' class="popup_window">
+        <pre>pt1.6: ----开始执行测试用例  start ----
+----在书城页面，点击右上角的“时刻表”，测试其能正常跳转到可解锁书籍查看界面的功能----
+{'dataJson': {'all': {'canUnlockTip': 'No more episodes in queue.',
+                      'content': 'You’ve reached the limit. Please remove one '
+                                 'story before adding a new one to the '
+                                 'Timetable.',
+                      'list': [],
+                      'noUnlockTip': 'All episodes are unlocked.',
+                      'title': 'The queue limit is 7. '},
+              'today': [],
+              'tomorrow': []},
+ 'msg': 'success',
+ 'show': False,
+ 'status': 0}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.7' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_007_library_sel_page_reading</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.7')" >
+        通过</a>
+    <div id='div_pt1.7' class="popup_window">
+        <pre>pt1.7: ----开始执行测试用例  start ----
+----在书城页面，选择任意一本多章节书，测试用户可以自主选择章节内容的功能----
+{'dataJson': {'authorWords': '',
+              'bookId': 'CGjoBU1ZajfcBfrRWpDOMQ==',
+              'content': 'Jw9kEdJemUif0AyUKrY7vlRou+I+r3ilRI0EEgxBUkUzGFUOxEKK+Nxu/v1sSU+kZv6HVkLKtMtIvpi2D0sYdIyEY+hKzTvUfLeKIN+GVpt+hVKjA9p7McpWKTM6D3OOsB8czHz2PCTFvFkhHrqFBUpCetJHjfQQOkiv4yydHia5MO4yEc6SrqowvNatYh8yG/9TRfvglBliAjFTVkOXJbDNcq1xCvsHjEkKzwgZJa5iU635178lZV3I/2xymBtjukFlJtMkQ/gqd7UQzm0IG9spRtCdb7mgjAb4G/oa6KTXNil8JPezIK4tCdSipmW653UC/090fm41mjPAVXY+bFVbbAufoqvio/OZg3eAKxBKondFy/SY/bK3mdbMfCfTOhqXzfgxGiiANVuTHJ5BRngcaOIb3dENl2ybz9h3RoLUsHgx+LdTlbAnoxl03ADJzNoekzEcXi+1jaM8KHoPfvohKjqo0xfUwlEWt5IL8SBiGvcurRxepTR1KNl0WMDiIFIwWRIyuKAroPGqqE33GUk4F+9h7eGrWtXxiRqghA7gH4GfvOVSpwJUqiSA4sYuj1ErH1LJT4zk1RdBE2pECER4N/4ga8+lKyU7/4IdWhI2vIREFMxNG/SWbknI7IEvr18R//A1GNttkz7NLOzTUhA26AAKoxWnn3J2NDjUDmu5k/uK9k7fSY9CcS4MyqzRrYQxgVccwSjI0paPlkzJcnthEi8KOXb66aafhNPuesdAPZOS0ByF0mXY7VjstmNcw1IsXB9wbGkTRcDXav0v+ApbU+CASjZTqkMd+LHmR7fQzFea8aD8USFECKU44zbM9Thaqq3e9VX4iMa6uW174rxkUnvXb3++SMeMyctnFfuHpoXENqTayTQ89EHyyanniPGOWD91Gl9/m35lnLeqfzMASveU0Gpc8yCKPGbM9aQSYKK/R/0lR8oV8+r2iS5k6CrWQvwMX2wobuilsOmuqPjETWYqTM9G7RkXvjXbTko/fvh3gXnQkPhGfpQ14KMU3iwHOJUkn3JmB0WQK8ZCY7oyNFf+xfoNGa6mLYOwKe/KISdVpZxbDsNg3HT5EVei9VHf5oTnYCMVdefoarI1Ed0nfBsUT6tS5B7NE35miFgLbMYA3fTVembk96q6fXhLBhb3J85gXXYOCNTvn4pXLnS4LUNOVfS6IrSzPiY+CrHe+Q2c8CFJ8JytqWjSMgLPZGKvX/AxVUlMin51fbCJXsKiAW6twEw55XLrJqrfC92EFfwIEfcTHKEtc8hPGnemYTCAwYTYC6cBkdsGWXoEXYX8JFkBhQTK8o0wcRm7HMFSqqs3emc9bsSdXpap0b9OrpUVhLCl9t0JE3FfBShrcuSScKM2a8aMZTPcV0nzPQwrQwiGfub/++4v4/Htl53gG3HakvJEpePCtqN52mRQEu01ewWYfmy+4gzV5mrlWRIShvnySJZxr5yo7Svhf9CdL7A8IRLaqEv9y7lgJ5ERu1zMiaLc1rU/jDWBd828NY2gEzyko/Ss21GEk+CICwzr6WcZBo+DhyETryjlDKCTNfhI/SPT73XHOzQlrgy/JSSCj0oRt3FOuRfAP2evx8p2bHaDD+9U7OZTUrYm2XQXsBz4ZQrKld2pTMoBN+lXSc4jUQAt1wrLyRamSSujipcC3/yx3nBnQMS/N2XT7sUi9j/srNobzcftw6ts2zR3vo1ssRRAG68bdaQTQn42LqOTZIiQDkOpc35p5XjGqlZiVLIrTW3UKQf6e8GrHunNZpC1gQ9BEpMWKjXFmYODagIoH3m1ABTblyogxZ+HwOXpFrWZgVfYyPiNjLOnDyN8XJIeSURiK14GnYBXdqaqy9dGVqHnm6EZ3PmbRS7p80g3gmXq1NR4GMdnrbjPH0FGAW0+JPE5tmrfMb2nOosJPi+QorUbC7SHRRSReqLslUcQ8TKvvgTbI8p25zecJ2H12NshvlwKo1Bpu+gyFnLvyZMC37IW9MASW+KOA2SWhFxQNXf4kA9Pl8qQ3eqxb1W4Ly43IMtE98EUgLW8k9tisB9olVreIvF98DyqBuKJfH7clYjbvdGHW9djRhtoM0oX11hzsAFaxOKRZ1mY0XR6dTscY9f2r/nwJs+vUL9RE/SGBGqZi3N86JCe74HipMoJtlnyIGeIQ7vH4GZdQuLBZ4pjyuMO5i+uVfVhUNI5th0Svq2QHsjoTqxIxzC8xKMGEbAgK80CXmgQs0d6eJoO8/SXrXbm6UztUvQ3kXdoIe0TrrxmtcD9HE8qjOaF0lCzeTT8g7jMtzO5QZ5LSly7p0hFVXMGqpleGGNOfmbKTe3E2EG8779syooFYUZa5JV+A/j9YkpQbYbf7ay7LAxAGGK9pyvwAcROXR3oPqxMZetUCNWAXmoP4Eh0E/jr3V8XjdHDVlVckWPVibFReahGdBwJuf8RXnvE12i0kZP3dSrSeYLwSllbNUtghiJBsnte8EmNujFRx3g6PD7otvvCT9qHGZIH+9vaOa66DC/DDIfDeKA4QvO021RG6ALvHlI3HGaftXCtRMylVjWAv4U9SWwIet8y4ehI1isGLYi0J0ij54WXi5vPSJsXJdI2XQ3RV0zDVt0wi4oo/TQvqiLsvu/zov9tOdvb7JwljJ3kXHg2GUtISVoO40BJrpl28SHyywEOyV1IFY0lMGb8ApqXg9q+KAlGi7BxFtgYxJHb0Jh3J0fC8YZcAMrX80X3vHJDyLzXjooCAR6W0DwxaeELRZ57joacLe57x2XfX83XN2EW73SpSxrxTFBW8xYGl0z8Ug9BKXZ46Cn0BRzpdA6nnxRXMsAVXqDBGK6xCn1d5rt7/lMRTVrluJVpbNB2C07Se61wx6UTmIdnKIV/+3W2P68bVRvX3maw57oSapyNRdN3mXis0yOQvoVLpDanwDOaOrdXNa0MBjkgTop4GVMKqjgmrnVrXcsK58PV1BRZaZ8BYN4oe59X52VXvbnOKCl8LxWUzjpjJ64Ej99/3ttnYLf/335BtRz1uigokzbRikuPyal6QIJbbNtzCGbPvN5+0DhEqjyketbYNwvZ/6o0jRUjtEglYwSwdtM9NtNhIOohuzoutwSn/M6x3GS0A9cSnHhfVlvizrQK6gfu5iG5pkJtpKkGzZ3g8Re1tPMdbXuZdAucqfS2+sWZYIuyg+Vtnd7amZ/VtfNrRf49Au4VyElXRq61GyVzUT99du6J7oFR+nso/n0rSZ45y/XL8ACsQ3BOXIyiW+hq8EB2n7MflzekjSOzAHZ+ztljhhuAxXB5i0pptIFyOz5cSeKwrQpAGUJSZdnGytZJ2Cl8WVh49eN2o37BTrt6eDeaIhlt0vEZayXWAPXDV9EAJC44i+BXNAcfIUJpwsWmnOOC6Q/F24vrru/vPab+tcrkqnV7r2lZmpHpXu68x73kvARAI8b0iMe0Dplr14K0TworE6AHZMEKPq1S1xGMwKSnXyysW/6vkTSLgzZ/I9K29H6HrzJ2L4yuH7SIXauDOkuoHSiImGSaWv1sdDuW71v576ODZeAqZaYb8bwSUz61Vh0rE3ZBEVOGPyqOK5varO+X1/1MB5Q0W9Osb0JaFvjIWiBgyNZbeSG4q+Jm5IOYzLquTWUaiPZPBjysgzMbqNSSAuSCyisg5WWgn89GJEZIECtRG0CjRkN3C5Q4YvwxlmQ3g+FN3q7+Cu0rQ+n3j4Ucx00NgcltBaG/kvUEW1yhRsYZFhIJJNeu+2lzELGsy3TSW5Z8g1WIc0BOIDLqmVIMI2IUfVjmtQNx/5TGR7qRe9N14hndh0E1wMTDnkBC9yyFzk4BkOhGOLR5grKAcjsWFRmhpatLKGM/a4fk5+8qjSg9BP6NXVu6XQ+K70YqySuUjLFKb412J0b2DhHTnkNFMiEp4xXKm+HMDKSyFTFtobKBeTprxUt2yhCihFgBIrlwbCrEyp1vSoKUDu7P0P+qFiM7VvcmqHi65TA/RhmufoXXYEOsDRXnyLWhxYGvfzfcPmcHcHep2duLtPJYNkbmyLVLia+Fow40lzLn1/5ExiE7LLskcRsaAanUHl4BAKHh2M1ZJMNF06jzgRFCfPtS2hF3hQzfQfZ91FNHnzs/8JFbu26q0bvOvWSkFma1YGV1V+C5bE3yV/f0Lx0fb9hPa4Z9Qa7B3p1joQP/c/vXjEXx+nENQ7VzeO+tTzaJayTvdbpuPKJgAzpAvBPOpaBWquVdxf49pf69ZVTj0jZSn93nMolnOv0AEfTKEOkEk/CBGe/T0Dsbvk0uj3nuN/ZpMfwAiXAdAzsAZ9H65PSdCCkoFqXds6lyZ6Yi1XTYsQVHyqRKkIAU8wtASKtevpt5ITJNwOw/GTScyk5GKipqtvlSW5usbLOGNQm8cJ295Vbl06UHBJQIeSb17KDKAxxvn64EsaZlJN0zvR6OQs0hpuLhpPr0ol+1f0gNo866XJ5yGXir+ZTkER6CQ3DD6qtLBnjYGmj3K9vapx1GAEjMdYriPqh8TqZDG/bcnGKns39RKWEOR1HNqbSm3vvZ/0YHVXwxBgXoD8G7xBTOsSIf6FqhpR51UEFaf1S1r/XlyWAk0pMNdXXfUHyqinroInZnj3UPeLWZpHqzvZzz7dGbPkJDghibwuLT2zQM44zq38BBE/G8lrj0oVH4SY7C9L+KbHTjHsrX6sG2aDb2QTqQw1VxkBWKaMJP7ESBczgNrVXBqCPlWhxXWu+LYrXFwkx4qQz09KBeFQNTwUfkrEmTiWcnh44RdOlJiaOQTugn8DNh2Pz37OpKEZWp9IFstRsrL/rMk3uVfgRThfeLLt8xjw9lS+iEiOFR+P9s6eDpgmSBh8gLMN29li2iHXO3E6wIXpSp41srRq8ZsmDijam5KDS76apN6v67QPE5wSFcN6VaXXkkBTL3TsOc6X1yX9Z03OAnCUyV002Vvnuo3uflppsFdkWyub5KCojB+niBtoqokTyGCAKGJc7+lrNMs5yLJYpiRhaqpgb8XJTS187y33bdSX1hKCFwH3HmOICCeJstbNRLWU7ZVmM90cy+Tvxl770vhfC+Pq2GuYlSMbBVnTGB1b5Jw4PA44B5HZD3+/BB/2QWj5i6VwcSi3B4M+8RM+xwu80cpWnoojHFpqj8YT3SXZh7ccuR6Jhv+3uskZixxhdaItGZzmK19yKFs0kurXjchZ/2Cv19QGPXR99tU/9JIZrlOxRr7HGvU/lYjCeLHw6Tyi1o4oUYsGQpziICFFjH/vpu7z2eWxhuSxuAI/9NTRNDNLnczeaWl1E5BPingSTWlVJZ9qYvPxg5IcSMWU5hjjlOnkCCbyl9OPrtV4sHY3h1hqS4ZqXWpAn2rydU5DW5VbkV92WY90t4MNH2GjsoiFeVcuN8/wAipaxCm4xLJn300nA4KpRgOXuh',
+              'id': 'iWWOUOIP8qYSuSjfhPiqHQ==',
+              'isbuyed': True,
+              'leftTime': -1,
+              'pubTime': 1541096032,
+              'startTiming': False},
+ 'msg': '',
+ 'show': False,
+ 'status': 0}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.8' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_008_library_read_follow</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.8')" >
+        通过</a>
+    <div id='div_pt1.8' class="popup_window">
+        <pre>pt1.8: ----开始执行测试用例  start ----
+----在书架页面，测试直接点击收藏的书会进入到阅读界面的功能----
+{'dataJson': {'author_list': [],
+              'author_list_rec_reason': 'JUGA OLEH PENULIS INI',
+              'chapter_end': [],
+              'chapter_end_rec_reason': 'Readers also enjoyed:',
+              'end_page': [],
+              'end_page_rec_reason': 'ANDA JUGA AKAN MENYUKAI',
+              'show_space': 3,
+              'show_start': 7},
+ 'msg': '',
+ 'show': False,
+ 'status': 0}
+{'dataJson': {'authorWords': '',
+              'bookId': 'Gzv0Bf5b9nfvE/8zzs2IGA==',
+              'content': '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',
+              'id': 'F40uCGCFZPCXZJXpOdrwoA==',
+              'isbuyed': True,
+              'leftTime': -1,
+              'pubTime': 1590042466,
+              'startTiming': False},
+ 'msg': '',
+ 'show': False,
+ 'status': 0}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.9' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_009_library_mohu_search_bookname</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.9')" >
+        通过</a>
+    <div id='div_pt1.9' class="popup_window">
+        <pre>pt1.9: ----开始执行测试用例  start ----
+----在书架页面，根据书名模糊搜索一本书且能正常阅读的功能----
+{'dataJson': {'list': [], 'totalCount': 0},
+ 'msg': '',
+ 'show': False,
+ 'status': 0}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.10' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_010_library_mohu_search_writername</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.10')" >
+        通过</a>
+    <div id='div_pt1.10' class="popup_window">
+        <pre>pt1.10: ----开始执行测试用例  start ----
+----在书架页面，根据作者名模糊搜索其书籍且能查看正常阅读这些书籍的功能----
+{'dataJson': {'list': [], 'totalCount': 0},
+ 'msg': '',
+ 'show': False,
+ 'status': 0}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.11' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_011_library_get_book_detail</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.11')" >
+        通过</a>
+    <div id='div_pt1.11' class="popup_window">
+        <pre>pt1.11: ----开始执行测试用例  start ----
+----获取书籍详细信息----
+{'dataJson': {'authorAvatar': 'http://file.ficfun.com/group1/M00/01/9C/rB84dl1KUQyAFfrYAAEb9ufSLLU518.png',
+              'authorId': 'L6CaVwlF1D7TvTMYLaelmg==',
+              'authorName': 'Junieloo',
+              'bookType': '1',
+              'bookUpdateTime': 1565861680000,
+              'catId': '0',
+              'cats': [{'id': '22', 'title': ''}],
+              'chapterNum': '24',
+              'chargeType': '1',
+              'clazz': '0',
+              'collectCount': '1104',
+              'comUser': '',
+              'coverUrl': 'http://file.dreame.com/group1/M00/01/AC/rB84dl1StPmAMxPrAAFSFZu4rj0528_375x542.jpg',
+              'delContent': '',
+              'descr': 'Daisy El Vanisha, designer mungil yang boleh dikatakan '
+                       'buta soal cinta. Ia tidak pernah mengenal lawan jenis '
+                       'lebih dalam apalagi berpacaran. Jangan tanya apa '
+                       'sebabnya, karena ia pun tidak mengerti alasan mengapa '
+                       'para pria tidak melirik dirinya sebagai seorang '
+                       '"wanita"! Walau kedua orang tuanya tidak memaksakan '
+                       'kehendak mereka yang ingin segera mendapatkan menantu '
+                       'idaman selama ini, namun siapa sih orang tua yang '
+                       'tidak gemas melihat anak perempuan satu-satunya, masih '
+                       'terlihat seperti anak kecil di usianya yang menginjak '
+                       '22 tahun?!\n'
+                       '\n'
+                       'Pratama Dani Rahardian, Dokter muda yang kembali ke '
+                       'Indonesia untuk mengurusi Rumah Sakit Rahardian milik '
+                       'sang Ayah, yang di wariskan untuknya. Kedatangannya '
+                       'membuat semua orang terkesima akan sosok dan '
+                       'pesonanya. Dan saat waktu mempertemukannya dengan '
+                       'gadis itu, mengapa hidupnya yang selama ini '
+                       'membosankan seketika berubah menjadi begitu '
+                       'menyenangkan? ',
+              'discount': '',
+              'fateTotalClick': 9752,
+              'firstChapterId': '6568564',
+              'firstChapterName': 'Satu',
+              'followStatus': 1,
+              'hotComments': [],
+              'id': 'vbJogk9HjI387+mGfULrQQ==',
+              'isDel': False,
+              'isLaterUnLock': 0,
+              'isRenew': 0,
+              'isUpdatedCommend': '0',
+              'lastChapter': 'Epilog',
+              'limitedFree': {'expire': '2018-08-01 00:00:00', 'is': True},
+              'name': 'I Adore You, Doctor!',
+              'nid': 'KALVDRm6L3ODOw',
+              'notice01': '',
+              'notice02': '',
+              'packageUser': 0,
+              'price': '0',
+              'recommends': {'list': [], 'title': 'ANDA JUGA AKAN MENYUKAI'},
+              'sCoverUrl': 'http://file.dreame.com/group1/M00/01/AC/rB84dl1StPmAMxPrAAFSFZu4rj0528_375x542.jpg',
+              'score': '0',
+              'status': '1',
+              'tag': [],
+              'topCategoryName': 'Other',
+              'totalClick': '962',
+              'upChapter': '407730',
+              'wordCount': '36781',
+              'words': ''},
+ 'msg': '',
+ 'show': False,
+ 'status': 0}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.12' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_012_bookshelf_site_message</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.12')" >
+        通过</a>
+    <div id='div_pt1.12' class="popup_window">
+        <pre>pt1.12: ----开始执行测试用例  start ----
+----在书架页面，点击右上角的“会话”按钮，测试其能正常进入到站内信界面的功能----
+{'dataJson': {'message': [{'create_time': '2020-06-06 06:49:52',
+                           'data': None,
+                           'del': '0',
+                           'id': '47332',
+                           'identify': None,
+                           'is_read': 0,
+                           'jump_type': 1,
+                           'message': 'Welcome to Dreame! Include yourself in '
+                                      'reading a wide variety of genres at '
+                                      'your relaxing moments. Stories daily '
+                                      'updates to keep you up with all the '
+                                      'latest episodes. Thanks for your coming '
+                                      'and making Dreame better. We have added '
+                                      '50 free coins to your account and you '
+                                      'can use them to unlock intriguing '
+                                      'stories. Go and enjoy now!',
+                           'qid': '4296000363',
+                           'sender': 1,
+                           'title': 'Welcome Gift!',
+                           'update_time': '2020-06-06 06:49:52'}],
+              'notification': []},
+ 'msg': 'success',
+ 'show': False,
+ 'status': 0}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.13' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_013_bookshelf_batchUnfollow_one_book</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.13')" >
+        通过</a>
+    <div id='div_pt1.13' class="popup_window">
+        <pre>pt1.13: ----开始执行测试用例  start ----
+----在书架页面，测试取消一本收藏书籍的功能运行正确----
+{'dataJson': {'fail': [], 'success': ['+iEFxZxn8dAqSMaLzMv/jw==']},
+ 'msg': 'success',
+ 'show': False,
+ 'status': 0}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.14' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_014_bookshelf_batchUnfollow_all_book</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.14')" >
+        通过</a>
+    <div id='div_pt1.14' class="popup_window">
+        <pre>pt1.14: ----开始执行测试用例  start ----
+----在书架页面，测试批量取消多本收藏书籍的功能运行正确----
+{'dataJson': {'fail': [],
+              'success': ['5sWGWgn3N3+RmsriaWVXjg==',
+                          'jgTrpkm6Vt3gp7f+HJvJsQ==']},
+ 'msg': 'success',
+ 'show': False,
+ 'status': 0}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.15' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_015_me_feedback</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.15')" >
+        通过</a>
+    <div id='div_pt1.15' class="popup_window">
+        <pre>pt1.15: ----开始执行测试用例  start ----
+----测试游客用户提交反馈意见的功能----
+{'dataJson': {'msg': 'success'}, 'msg': '', 'show': False, 'status': 0}
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+        <tr id='total_row'>
+            <td>总计</td>
+            <td>15</td>
+            <td>15</td>
+            <td>0</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+        <div id='ending'>&nbsp;</div>
+        
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('chart'));
+        // 指定图表的配置项和数据
+        var option = {
+            title : {
+                text: '测试执行情况',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            color: ['#95b75d', 'grey', '#b64645'],
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['通过','失败','错误']
+            },
+            series : [
+                {
+                    name: '测试执行情况',
+                    type: 'pie',
+                    radius : '60%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:15, name:'通过'},
+                        {value:0, name:'失败'},
+                        {value:0, name:'错误'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+    
+    </div>
+</body>
+</html>

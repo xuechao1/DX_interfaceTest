@@ -1,0 +1,26 @@
+test_000_case (testCase.TestDreame.TestDreame) ... ok
+test_000_case_1 (testCase.TestDreame.TestDreame) ... ok
+test_001_case (testCase.TestDreame.TestDreame) ... ok
+test_002_case (testCase.TestDreame.TestDreame) ... ok
+test_003_case (testCase.TestDreame.TestDreame) ... ok
+test_004_case (testCase.TestDreame.TestDreame) ... ok
+test_005_case (testCase.TestDreame.TestDreame) ... ok
+test_006_case (testCase.TestDreame.TestDreame) ... ok
+test_007_case (testCase.TestDreame.TestDreame) ... ok
+test_008_case (testCase.TestDreame.TestDreame) ... ok
+test_009_case (testCase.TestDreame.TestDreame) ... ok
+test_011_case (testCase.TestDreame.TestDreame) ... ok
+test_012_case (testCase.TestDreame.TestDreame) ... ok
+test_013_case (testCase.TestDreame.TestDreame) ... ok
+test_014_case (testCase.TestDreame.TestDreame) ... ok
+test_015_case (testCase.TestDreame.TestDreame) ... ok
+test_016_case (testCase.TestDreame.TestDreame) ... ok
+test_017_case (testCase.TestDreame.TestDreame) ... ok
+test_018_case (testCase.TestDreame.TestDreame) ... ok
+test_019_case (testCase.TestDreame.TestDreame) ... ok
+test_020_case (testCase.TestDreame.TestDreame) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 29.536s
+
+OK
