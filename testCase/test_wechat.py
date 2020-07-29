@@ -9,6 +9,7 @@ ___date___ = '2020/7/28 7:53'
 # appium-python-client  客户端脚本
 import pytest
 import time
+import allure
 from appium import webdriver
 from appium.webdriver.common.mobileby import MobileBy
 
@@ -20,6 +21,7 @@ from appium.webdriver.common.mobileby import MobileBy
 class TestWeChat:
 
     # def setup(self):
+    @allure.description("""android device initial""")
     def setup_class(self):
         caps = {}
         caps["platformName"] = "android"
@@ -36,6 +38,7 @@ class TestWeChat:
         self.driver.implicitly_wait(10)
 
     @pytest.mark.skip
+    @allure.title("测试用例1--打卡")
     def test_01_daka(self):
         """打卡功能
         """
@@ -62,6 +65,7 @@ class TestWeChat:
         result = self.driver.find_element(MobileBy.ID, "com.tencent.wework:id/o_").text
         assert '打卡成功' in result
 
+    @allure.title("测试用例2--删除联系人")
     def test_02_del_man(self):
         """
         删除账号
@@ -94,6 +98,7 @@ class TestWeChat:
 
     # def teardown(self):
 
+    @allure.title("测试用例3--添加联系人")
     def test_03_add_man(self):
         """
         添加成员

@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
-import time, os
+import os
+import time
 import requests
 import warnings
 import unittest
