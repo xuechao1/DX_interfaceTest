@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-#！/bin/bash
+# ！/bin/bash
 
 import time
 import unittest
