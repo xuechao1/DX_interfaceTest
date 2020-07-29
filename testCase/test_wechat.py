@@ -75,26 +75,30 @@ class TestWeChat:
         self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'云潇潇')]").click()
         self.driver.find_element(MobileBy.ID, "com.tencent.wework:id/e8u").click()  # 删除按钮
         self.driver.find_element(MobileBy.ID, "com.tencent.wework:id/ber").click()  # 确认按钮
+        time.sleep(1.5)
 
-    # @pytest.mark.parametrize("name,tel_num", [("云潇", "15915766618"), ("潇潇", "15915766617"), ("潇潇云", "15915766620")])
-    # def test_03_add_man(self, name, tel_num):
-    #     """
-    #     添加成员
-    #     """
-    #     self.driver.find_element(MobileBy.XPATH, "//*[contains(@text, '通讯录')]").click()
-    #     time.sleep(0.7)
-    #     self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'添加成员')]").click()
-    #     self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'手动输入添加')]").click()
-    #     self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'必填')]").send_keys(name)
-    #     self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'手机号')]").send_keys(tel_num)
-    #     self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'设置部门')]").click()
-    #     self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'确定')]").click()
-    #     self.driver.find_element(MobileBy.ID, "com.tencent.wework:id/hi9").click()  # 保存按钮
-    #     time.sleep(1.5)
-    #     self.driver.find_element(MobileBy.ID, "com.tencent.wework:id/hhr").click()
-    #     time.sleep(0.5)
-    #     result = self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'人未加入')]").text
-    #     assert '人未加入' in result
+    @pytest.mark.parametrize("name,tel_num", [("云潇1", "15915766618"), ("潇潇", "15915766617"), ("潇潇云", "15915766620")])
+    def test_04_piadd_man(self, name, tel_num):
+        """
+        添加成员
+        """
+        self.driver.find_element(MobileBy.XPATH, "//*[contains(@text, '通讯录')]").click()
+        time.sleep(0.7)
+        self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'添加成员')]").click()
+        time.sleep(0.5)
+        self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'手动输入添加')]").click()
+        self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'必填')]").send_keys(name)
+        self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'手机号')]").send_keys(tel_num)
+        self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'设置部门')]").click()
+        self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'确定')]").click()
+        self.driver.find_element(MobileBy.ID, "com.tencent.wework:id/hi9").click()  # 保存按钮
+        time.sleep(1.5)
+        self.driver.find_element(MobileBy.ID, "com.tencent.wework:id/hhr").click()  # 返回按钮
+        time.sleep(1.5)
+        self.driver.find_element(MobileBy.XPATH, "//*[contains(@text, '消息')]").click()
+        time.sleep(1)
+        # result = self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'人未加入')]").text
+        # assert '人未加入' in result
 
     # def teardown(self):
 
