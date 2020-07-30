@@ -1,6 +1,9 @@
 # -*- coding:utf-8 -*-
+# ！/bin/bash
 
 import sys
+import allure
+import pytest
 import requests
 import warnings
 import unittest
@@ -14,11 +17,13 @@ host_www = 'http://activity.dreame.com/'
 
 class TestDreame(unittest.TestCase):
 
-    def setUp(self):
+    @allure.description("""忽略执行的警告信息""")
+    def setup(self):
         warnings.simplefilter('ignore', ResourceWarning)
         self.s = requests.session()
         print("----开始执行测试用例  start ----")
 
+    @allure.title("测试用例1--测试游客用户能正常登录APP的功能")
     def test_000_visitor_login(self):
         """
         ---测试游客用户能正常登录APP的功能----
@@ -46,6 +51,7 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例2--在书城页面，选择任意一本书籍，测试能正常阅读的功能")
     def test_001_library_book_reading(self):
         print("----在书城页面，选择任意一本书籍，测试能正常阅读的功能----")
         print("----获取书城的书籍列表----")
@@ -118,6 +124,7 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例3--在书城页面，选择任意一本书籍，测试能正常进行收藏操作的功能")
     def test_002_library_book_follow(self):
         print("----在书城页面，选择任意一本书籍，测试能正常进行收藏操作的功能----")
         url_2 = host + '/apiBookshelf/follow?timezone=Asia%2FShanghai&sex=1' \
@@ -142,6 +149,7 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例4--在书城页面，选择任意一本书籍，测试其能取消收藏的功能")
     def test_003_library_book_unfollow(self):
         print("----在书城界面，选择任意一本已收藏的书籍，测试其能取消收藏的功能----")
         url_3 = host + '/apiBookshelf/unfollow?timezone=Asia%2FShanghai&sex=1' \
@@ -166,6 +174,7 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例5--在书城侧页面，点击右上角的会话按钮，测试其能正常进入到站内信界面的功能")
     def test_004_library_site_message(self):
         print("----在书城侧页面，点击右上角的会话按钮，测试其能正常进入到站内信界面的功能----")
         url_4 = host + '/Message/getNewMessage?timezone=Asia%2FShanghai' \
@@ -213,6 +222,7 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例6--在书城页面，选择任意一本多章节书，测试用户可以自主选择章节内容的功能")
     def test_005_library_sel_article_page(self):
         print("----在书城页面，选择任意一本多章节书，测试用户可以自主选择章节内容的功能----")
         url_5 = host + '/api/readV1?timezone=Asia%2FShanghai&sex=1&userKeyWithoutImei=e694c359a708' \
@@ -237,6 +247,7 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例7--在书城页面，根据书名模糊搜索一本书且能正常阅读的功能")
     def test_006_library_unclear_book_name_search(self):
         print("----在书城页面，根据书名模糊搜索一本书且能正常阅读的功能----")
         url_6 = host + '/api/search?keywords=the+lone&timezone=Asia%2FShanghai&userKeyWithoutI' \
@@ -311,6 +322,7 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例8--在书城页面，根据作者名模糊搜索其书籍且能查看正常阅读这些书籍的功能")
     def test_007_library_unclear_writer_name_search(self):
         print("----在书城页面，根据作者名模糊搜索其书籍且能查看正常阅读这些书籍的功能--")
         url_7 = host + '/api/search?keywords=Tasha+%28Tashie%29&timezone=Asia%2FShanghai' \
@@ -386,6 +398,7 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例9--在书城页面，点击右上角的“时刻表”，测试其能正常跳转到可解锁书籍查看界面的功能")
     def test_008_library_oclock_timelist(self):
         print("----在书城页面，点击右上角的“时刻表”，测试其能正常跳转到可解锁书籍查看界面的功能----")
         url_8 = host + '/calendar/getNewCalendarContent?timezone=Asia%2FShanghai' \
@@ -435,6 +448,7 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例10--对于存在多章节的书籍在该章节阅读完成时，测试其能正常阅读下一章节的功能")
     def test_009_library_next_article_reading(self):
         print("----对于存在多章节的书籍在该章节阅读完成时，测试其能正常阅读下一章节的功能----")
         url_9 = host + '/api/readV1?timezone=Asia%2FShanghai&sex=1' \
@@ -461,6 +475,8 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例11--当用户余额足够时，测试其能正常购买收费章节书的功能能")
+    @pytest.mark.skip
     def test_010_case(self):  # 未完成
         print("----当用户余额足够时，测试其能正常购买收费章节书的功能----")
         print("----查询用户钱包余额----")
@@ -507,6 +523,7 @@ class TestDreame(unittest.TestCase):
         else:
             print("----余额不足，请充值")
 
+    @allure.title("测试用例12--在书架页面，测试直接点击收藏的书会进入到阅读界面的功能")
     def test_011_bookshelf_save_book_reading(self):
         print("----在书架页面，测试直接点击收藏的书会进入到阅读界面的功能----")
         url_11 = host + '/api/getChapList?timezone=Asia%2FShanghai' \
@@ -532,6 +549,7 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例13--在书架页面，点击右上角的“礼包”，测试能正常跳转到任务管理界面的功能")
     def test_012_bookshelf_gift_tasklist(self):
         print("----在书架页面，点击右上角的“礼包”，测试能正常跳转到任务管理界面的功能----")
         url_12 = host_www + '/api/getUserTask?u=eyJxIjo0Mjk2MDAwMzYzLCJNIjoiIiwibiI6IkhGUkU0Mjk2M' \
@@ -590,7 +608,8 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
-    def test_013_tasklist_reading_task_turn(self):
+    @allure.title("测试用例14--在任务管理界面，点击“阅读”任务，测试其能正常跳转到书架（可配置）页面的功能")
+    def test_013_task_list_reading_task_turn(self):
         print("----在任务管理界面，点击“阅读”任务，测试其能正常跳转到书架（可配置）页面的功能----")
         url_13 = host + '/api/getAll?timezone=Asia%2FShanghai&userKeyWithoutImei=e694c359a708d' \
                         '6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
@@ -615,7 +634,8 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
-    def test_014_bookshelf_timeOclock_unlock_book(self):
+    @allure.title("测试用例15--在书架页面，点击右上角的“时刻钟”按钮，测试其能正常跳转到解锁书籍界面的功能")
+    def test_014_book_shelf_time_clock_unlock_book(self):
         print("----在书架页面，点击右上角的“时刻钟”按钮，测试其能正常跳转到解锁书籍界面的功能----")
         url_14 = host + '/calendar/getNewCalendarContent?timezone=Asia%2FShanghai' \
                         '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd' \
@@ -639,6 +659,7 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例16--在书架页面，根据书名模糊搜索一本书且能正常阅读的功能")
     def test_015_bookshelf_unclear_bookname_api_search(self):
         print("----在书架页面，根据书名模糊搜索一本书且能正常阅读的功能----")
         url_15 = host + '/api/search?keywords=Wolf&timezone=Asia%2FShanghai' \
@@ -717,6 +738,7 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例17--在书架页面，根据作者名模糊搜索其书籍且能查看正常阅读这些书籍的功能")
     def test_016_bookshelf_unclear_writername_api_search(self):
         print("----在书架页面，根据作者名模糊搜索其书籍且能查看正常阅读这些书籍的功能----")
         url_16 = host + '/api/search?keywords=coming&timezone=Asia%2FShanghai' \
@@ -794,6 +816,7 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例18--在书架页面，点击右上角的“会话”按钮，测试其能正常进入到站内信界面的功能")
     def test_017_bookshelf_site_message(self):
         print("----在书架页面，点击右上角的“会话”按钮，测试其能正常进入到站内信界面的功能----")
         url_17 = host + '/Message/getSepUnreadMessage?timezone=Asia%2FShanghai' \
@@ -842,8 +865,9 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例19--在书架页面，测试取消一本收藏书籍的功能")
     def test_018_bookshelf_unfollow_book(self):
-        print("----在书架页面，测试取消一本收藏书籍的功能运行正确----")
+        print("----在书架页面，测试取消一本收藏书籍的功能----")
         url_18 = host + '/apiBookshelf/batchUnfollow?timezone=Asia%2FShanghai&sex=1' \
                         '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                         '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
@@ -867,8 +891,9 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例20--在书架页面，测试批量取消多本收藏书籍的功能")
     def test_019_bookshelf_piliang_cancle_books(self):
-        print("----在书架页面，测试批量取消多本收藏书籍的功能运行正确----")
+        print("----在书架页面，测试批量取消多本收藏书籍的功能----")
         url_19 = host + '/apiBookshelf/batchUnfollow?timezone=Asia%2FShanghai&sex=1' \
                         '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                         '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
@@ -892,6 +917,7 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
+    @allure.title("测试用例21--在“我的”界面，测试点击inbox能正常进入到短信及站内信界面的功能")
     def test_020_myaccount_inbox_function(self):
         print("----在“我的”界面，测试点击inbox能正常进入到短信及站内信界面的功能----")
         url_20 = host + '/Message/getSepUnreadMessage?timezone=Asia%2FShanghai' \

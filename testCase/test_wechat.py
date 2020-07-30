@@ -78,7 +78,7 @@ class TestWeChat:
         time.sleep(1.5)
 
     @pytest.mark.parametrize("name,tel_num", [("云潇1", "15915766618"), ("潇潇", "15915766617"), ("潇潇云", "15915766620")])
-    def test_04_piadd_man(self, name, tel_num):
+    def test_04_pi_add_man(self, name, tel_num):
         """
         添加成员
         """
@@ -97,10 +97,6 @@ class TestWeChat:
         time.sleep(1.5)
         self.driver.find_element(MobileBy.XPATH, "//*[contains(@text, '消息')]").click()
         time.sleep(1)
-        # result = self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'人未加入')]").text
-        # assert '人未加入' in result
-
-    # def teardown(self):
 
     @allure.title("测试用例3--添加联系人")
     def test_03_add_man(self):
@@ -108,6 +104,7 @@ class TestWeChat:
         添加成员
         """
         self.driver.find_element(MobileBy.XPATH, "//*[contains(@text, '通讯录')]").click()
+        # self.driver.find_element(MobileBy.XPATH,"//*[contains(@text, '通讯录') and contains(@resource-id,'com.tencent.wework:id/e48')]").click()
         time.sleep(0.7)
         self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'添加成员')]").click()
         self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'手动输入添加')]").click()
@@ -123,5 +120,6 @@ class TestWeChat:
         assert '人未加入' in result
 
     def teardown_class(self):
+        # def teardown(self):
         # 消毁session
         self.driver.quit()
