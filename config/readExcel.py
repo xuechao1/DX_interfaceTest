@@ -9,6 +9,7 @@ path = getpathInfo.get_Path()
 
 
 class readExcel():
+
     def get_xls(self, xls_name, sheet_name):  # xls_name填写用例的Excel名称 sheet_name该Excel的sheet名称
         cls = []
         # 获取用例文件路径
