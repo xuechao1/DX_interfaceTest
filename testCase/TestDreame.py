@@ -5,6 +5,7 @@ import requests
 import warnings
 import unittest
 import pytest
+import allure
 from pprint import pprint
 from config.http_req import Http_Req
 from config import readConfig
@@ -17,11 +18,13 @@ host_www = 'http://activity.dreame.com/'
 
 class TestDreame(unittest.TestCase):
 
+    @allure.description("""忽略执行的警告信息""")
     def setUp(self):
         warnings.simplefilter('ignore', ResourceWarning)
         self.s = requests.session()
         print("----开始执行测试用例  start ----")
 
+    @allure.title("测试用例1--测试游客用户能正常登录APP的功能")
     def test_000_0_visitor_login(self):
         """
         ---测试游客用户能正常登录APP的功能----
@@ -59,6 +62,7 @@ class TestDreame(unittest.TestCase):
               '&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url)
 
+    @allure.title("测试用例2--在书城页面，选择任意一本书籍，测试能正常阅读的功能")
     def test_001_library_book_reading(self):
         print("----在书城页面，选择任意一本书籍，测试能正常阅读的功能----")
         print("-----------------------------------------")
@@ -95,6 +99,7 @@ class TestDreame(unittest.TestCase):
                 '&apiLevel=28&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_1)
 
+    @allure.title("测试用例3--在书城页面，选择任意一本书籍，测试能正常进行收藏操作的功能")
     def test_002_library_book_follow(self):
         print("----在书城页面，选择任意一本书籍，测试能正常进行收藏操作的功能----")
         url = '/apiBookshelf/follow?timezone=Asia%2FShanghai&sex=1' \
@@ -112,6 +117,7 @@ class TestDreame(unittest.TestCase):
               '&apiLevel=28&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url)
 
+    @allure.title("测试用例4--在书城页面，选择任意一本书籍，测试其能取消收藏的功能")
     def test_003_library_book_un_follow(self):
         print("----在书城界面，选择任意一本已收藏的书籍，测试其能取消收藏的功能----")
         url_3 = '/apiBookshelf/unfollow?timezone=Asia%2FShanghai&sex=1' \
@@ -129,6 +135,7 @@ class TestDreame(unittest.TestCase):
                 '&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_3)
 
+    @allure.title("测试用例5--在书城侧页面，点击右上角的会话按钮，测试其能正常进入到站内信界面的功能")
     def test_004_library_site_message(self):
         print("----在书城侧页面，点击右上角的会话按钮，测试其能正常进入到站内信界面的功能----")
         url_4 = '/Message/getNewMessage?timezone=Asia%2FShanghai' \
@@ -162,6 +169,7 @@ class TestDreame(unittest.TestCase):
                 '&timestamp=0'
         Http_Req().http_req(url_5)
 
+    @allure.title("测试用例6--在书城页面，选择任意一本多章节书，测试用户可以自主选择章节内容的功能")
     def test_005_library_sel_article_page(self):
         print("----在书城页面，选择任意一本多章节书，测试用户可以自主选择章节内容的功能----")
         url_5 = '/api/readV1?timezone=Asia%2FShanghai&sex=1&userKeyWithoutImei=e694c359a708' \
@@ -179,6 +187,7 @@ class TestDreame(unittest.TestCase):
                 '&appKey=201020412&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_5)
 
+    @allure.title("测试用例7--在书城页面，根据书名模糊搜索一本书且能正常阅读的功能")
     def test_006_library_unclear_book_name_search(self):
         print("----在书城页面，根据书名模糊搜索一本书且能正常阅读的功能----")
         url_6 = '/api/search?keywords=the+lone&timezone=Asia%2FShanghai&userKeyWithoutI' \
@@ -232,6 +241,7 @@ class TestDreame(unittest.TestCase):
                   '&appKey=201020412&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_6_2)
 
+    @allure.title("测试用例8--在书城页面，根据作者名模糊搜索其书籍且能查看正常阅读这些书籍的功能")
     def test_007_library_unclear_writer_name_search(self):
         print("----在书城页面，根据作者名模糊搜索其书籍且能查看正常阅读这些书籍的功能--")
         url_7 = '/api/search?keywords=Tasha+%28Tashie%29&timezone=Asia%2FShanghai' \
@@ -286,6 +296,7 @@ class TestDreame(unittest.TestCase):
                   '&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_7_2)
 
+    @allure.title("测试用例9--在书城页面，点击右上角的“时刻表”，测试其能正常跳转到可解锁书籍查看界面的功能")
     def test_008_library_clock_time_list(self):
         print("----在书城页面，点击右上角的“时刻表”，测试其能正常跳转到可解锁书籍查看界面的功能----")
         url_8 = '/calendar/getNewCalendarContent?timezone=Asia%2FShanghai' \
@@ -321,6 +332,7 @@ class TestDreame(unittest.TestCase):
                   '&apiLevel=28&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_8_1)
 
+    @allure.title("测试用例10--对于存在多章节的书籍在该章节阅读完成时，测试其能正常阅读下一章节的功能")
     def test_009_library_next_article_reading(self):
         print("----对于存在多章节的书籍在该章节阅读完成时，测试其能正常阅读下一章节的功能----")
         url_9 = '/api/readV1?timezone=Asia%2FShanghai&sex=1' \
@@ -340,6 +352,7 @@ class TestDreame(unittest.TestCase):
                 '&apiLevel=28&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_9)
 
+    @allure.title("测试用例11--当用户余额足够时，测试其能正常购买收费章节书的功能能")
     @pytest.mark.skip
     def test_010_case(self):  # 未完成
         print("----当用户余额足够时，测试其能正常购买收费章节书的功能----")
@@ -387,6 +400,7 @@ class TestDreame(unittest.TestCase):
         else:
             print("----余额不足，请充值")
 
+    @allure.title("测试用例12--在书架页面，测试直接点击收藏的书会进入到阅读界面的功能")
     def test_011_bookshelf_save_book_reading(self):
         print("----在书架页面，测试直接点击收藏的书会进入到阅读界面的功能----")
         url_11 = '/api/getChapList?timezone=Asia%2FShanghai' \
@@ -405,6 +419,7 @@ class TestDreame(unittest.TestCase):
                  '&apiLevel=28&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_11)
 
+    @allure.title("测试用例13--在书架页面，点击右上角的“礼包”，测试能正常跳转到任务管理界面的功能")
     def test_012_bookshelf_gift_task_list(self):
         print("----在书架页面，点击右上角的“礼包”，测试能正常跳转到任务管理界面的功能----")
         url_12 = '/api/getUserTask?u=eyJxIjo0Mjk2MDAwMzYzLCJNIjoiIiwibiI6IkhGUkU0Mjk2M' \
@@ -442,6 +457,7 @@ class TestDreame(unittest.TestCase):
                    '&isAuthor=0&osType=0'
         Http_Req().http_req_www(url_12_2)
 
+    @allure.title("测试用例14--在任务管理界面，点击“阅读”任务，测试其能正常跳转到书架（可配置）页面的功能")
     def test_013_task_list_reading_task_turn(self):
         print("----在任务管理界面，点击“阅读”任务，测试其能正常跳转到书架（可配置）页面的功能----")
         url_13 = '/api/getAll?timezone=Asia%2FShanghai&userKeyWithoutImei=e694c359a708d' \
@@ -460,6 +476,7 @@ class TestDreame(unittest.TestCase):
                  '&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_13)
 
+    @allure.title("测试用例15--在书架页面，点击右上角的“时刻钟”按钮，测试其能正常跳转到解锁书籍界面的功能")
     def test_014_bookshelf_time_clock_unlock_book(self):
         print("----在书架页面，点击右上角的“时刻钟”按钮，测试其能正常跳转到解锁书籍界面的功能----")
         url_14 = '/calendar/getNewCalendarContent?timezone=Asia%2FShanghai' \
@@ -477,6 +494,7 @@ class TestDreame(unittest.TestCase):
                  '&appKey=201020412&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_14)
 
+    @allure.title("测试用例16--在书架页面，根据书名模糊搜索一本书且能正常阅读的功能")
     def test_015_bookshelf_unclear_book_name_api_search(self):
         print("----在书架页面，根据书名模糊搜索一本书且能正常阅读的功能----")
         url_15 = '/api/search?keywords=Wolf&timezone=Asia%2FShanghai' \
@@ -534,6 +552,7 @@ class TestDreame(unittest.TestCase):
                    '&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_15_2)
 
+    @allure.title("测试用例17--在书架页面，根据作者名模糊搜索其书籍且能查看正常阅读这些书籍的功能")
     def test_016_bookshelf_unclear_writer_name_api_search(self):
         print("----在书架页面，根据作者名模糊搜索其书籍且能查看正常阅读这些书籍的功能----")
         url_16 = '/api/search?keywords=coming&timezone=Asia%2FShanghai' \
@@ -590,6 +609,7 @@ class TestDreame(unittest.TestCase):
                    '&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_16_2)
 
+    @allure.title("测试用例18--在书架页面，点击右上角的“会话”按钮，测试其能正常进入到站内信界面的功能")
     def test_017_bookshelf_site_message(self):
         print("----在书架页面，点击右上角的“会话”按钮，测试其能正常进入到站内信界面的功能----")
         url_17 = '/Message/getSepUnreadMessage?timezone=Asia%2FShanghai' \
@@ -624,6 +644,7 @@ class TestDreame(unittest.TestCase):
                    '&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_17_1)
 
+    @allure.title("测试用例19--在书架页面，测试取消一本收藏书籍的功能")
     def test_018_bookshelf_un_follow_book(self):
         print("----在书架页面，测试取消一本收藏书籍的功能运行正确----")
         url_18 = '/apiBookshelf/batchUnfollow?timezone=Asia%2FShanghai&sex=1' \
@@ -642,6 +663,7 @@ class TestDreame(unittest.TestCase):
                  '&apiLevel=28&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_18)
 
+    @allure.title("测试用例20--在书架页面，测试批量取消多本收藏书籍的功能")
     def test_019_bookshelf_piliang_cancle_books(self):
         print("----在书架页面，测试批量取消多本收藏书籍的功能运行正确----")
         url_19 = '/apiBookshelf/batchUnfollow?timezone=Asia%2FShanghai&sex=1' \
@@ -660,6 +682,7 @@ class TestDreame(unittest.TestCase):
                  'tbX9ALQ%3D%3D&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
         Http_Req().http_req(url_19)
 
+    @allure.title("测试用例21--在“我的”界面，测试点击inbox能正常进入到短信及站内信界面的功能")
     def test_020_my_account_inbox_function(self):
         print("----在“我的”界面，测试点击inbox能正常进入到短信及站内信界面的功能----")
         url_20 = '/Message/getSepUnreadMessage?timezone=Asia%2FShanghai' \
