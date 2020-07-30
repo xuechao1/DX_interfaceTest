@@ -6,9 +6,9 @@ import warnings
 import unittest
 import pytest
 from pprint import pprint
+from config.http_req import Http_Req
 
 sys.path.append("D:\\PycharmProjects\\DX_interfaceTest")
-
 host = 'http://3.85.16.233:32100'
 host_www = 'http://activity.dreame.com/'
 
@@ -37,20 +37,12 @@ class TestDreame(unittest.TestCase):
               "sign=3bc0d79ef6498669da353b248c2afd0c&userKeyWithoutImei=9977c1a4fb842edaf66ff4964018130b&" \
               "timezone=Asia%2FShanghai&versionName=1.7.2&oid=001f191d1d25daa402a34f04bc93507d&" \
               "osType=0&login_type=10"
-        url_0 = host + url
-        try:
-            result_0 = self.s.get(url_0)
-            t = result_0.json()
-            print(t)
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url)
 
     @pytest.mark.skip
     def test_000_1_book_list(self):
         print("----获取书城的书籍列表----")
-        url_0 = host + '/Discover?timezone=Asia%2FShanghai' \
+        url = '/Discover?timezone=Asia%2FShanghai' \
                        '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd' \
                        '&channel=dreameapp-23&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                        '&sign=718f33fc1a7b110f9d20399ef8f9a767&mcc=460&versionName=1.7.2' \
@@ -63,19 +55,12 @@ class TestDreame(unittest.TestCase):
                        'MiOiIwIiwibSI6MTU5MTU4NDM0MSwiYyI6MCwiYiI6IiIsImUiOiIiLCJpc0F1dGhvciI6ZmFsc2V9' \
                        '&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379&appKey=201020412' \
                        '&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_0 = self.s.get(url_0)
-            print(result_0.json())
-            t = result_0.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url)
 
     def test_001_library_book_reading(self):
         print("----在书城页面，选择任意一本书籍，测试能正常阅读的功能----")
         print("-----------------------------------------")
-        url_1 = host + '/api/bookInfo?bookshelf=6u9rGU%2F0FVMUPiItbX9ALQ%3D%3D%2CvhRlO%2Fp2LPt13f' \
+        url = '/api/bookInfo?bookshelf=6u9rGU%2F0FVMUPiItbX9ALQ%3D%3D%2CvhRlO%2Fp2LPt13f' \
                        'jpOFoo0Q%3D%3D%2CRvdq9VhPzTLkgyHofVE8Pw%3D%3D%2CR5NDszuwekbhS0c3i3%2B' \
                        'cyg%3D%3D%2C%2BiEFxZxn8dAqSMaLzMv%2Fjw%3D%3D%2C6sB5aEzcmvjSF5yvPFDGOQ%3D%3D' \
                        '&timezone=Asia%2FShanghai&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd' \
@@ -91,16 +76,9 @@ class TestDreame(unittest.TestCase):
                        'Fsc2V9&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                        '&appKey=201020412&id=IBHlOVzembrdDbPW%2BlY4ow%3D%3D&interfaceCode=122' \
                        '&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_1 = self.s.get(url_1)
-            print(result_1.json())
-            t = result_1.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url)
         print("----阅读一本书----")
-        url_1_1 = host + '/api/getChapList?timezone=Asia%2FShanghai&userKeyWithoutImei=e694c359a7' \
+        url_1= '/api/getChapList?timezone=Asia%2FShanghai&userKeyWithoutImei=e694c359a7' \
                          '08d6ceda7ae2dd9fe6cacd&channel=dreameapp-23&advertising_id=7a6c42db-28' \
                          '52-4db4-9206-47184fa7b8dd&sign=fac1d9f71603713065377f5ee9ea20f7&mcc=460' \
                          '&versionName=1.7.2&deviceId=6fb3537dbc70aad5&uuid=0cd7ed1a-22e1-490e-84' \
@@ -113,18 +91,11 @@ class TestDreame(unittest.TestCase):
                          '&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                          '&appKey=201020412&id=ywFOb6nQwlgTfz7puYkRfQ%3D%3D&interfaceCode=122' \
                          '&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_1_1 = self.s.get(url_1_1)
-            print(result_1_1.json())
-            t = result_1_1.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_1)
 
     def test_002_library_book_follow(self):
         print("----在书城页面，选择任意一本书籍，测试能正常进行收藏操作的功能----")
-        url_2 = host + '/apiBookshelf/follow?timezone=Asia%2FShanghai&sex=1' \
+        url = '/apiBookshelf/follow?timezone=Asia%2FShanghai&sex=1' \
                        '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                        '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd&sign=61ee37c599147b45' \
                        '5ffe6f6291efbefa&mcc=460&versionName=1.7.2&deviceId=6fb3537dbc70aad5' \
@@ -137,18 +108,11 @@ class TestDreame(unittest.TestCase):
                        'dGhvciI6ZmFsc2V9&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                        '&appKey=201020412&bid=ywFOb6nQwlgTfz7puYkRfQ%3D%3D&interfaceCode=122' \
                        '&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_2 = self.s.get(url_2)
-            pprint(result_2.json())
-            t = result_2.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url)
 
     def test_003_library_book_unfollow(self):
         print("----在书城界面，选择任意一本已收藏的书籍，测试其能取消收藏的功能----")
-        url_3 = host + '/apiBookshelf/unfollow?timezone=Asia%2FShanghai&sex=1' \
+        url_3 = '/apiBookshelf/unfollow?timezone=Asia%2FShanghai&sex=1' \
                        '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                        '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd&sign=61ee37c599147b45' \
                        '5ffe6f6291efbefa&mcc=460&versionName=1.7.2&deviceId=6fb3537dbc70aad5' \
@@ -161,18 +125,11 @@ class TestDreame(unittest.TestCase):
                        'F1dGhvciI6ZmFsc2V9&distinct_id=6fb3537dbc70aad5&osType=0' \
                        '&imei=357052092096379&appKey=201020412&bid=ywFOb6nQwlgTfz7puYkRfQ%3D%3D' \
                        '&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_3 = self.s.get(url_3)
-            pprint(result_3.json())
-            t = result_3.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_3)
 
     def test_004_library_site_message(self):
         print("----在书城侧页面，点击右上角的会话按钮，测试其能正常进入到站内信界面的功能----")
-        url_4 = host + '/Message/getNewMessage?timezone=Asia%2FShanghai' \
+        url_4 = '/Message/getNewMessage?timezone=Asia%2FShanghai' \
                        '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                        '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                        '&sign=3c10273fcab950d4f2df412bfa47e449&type=0&mcc=460&versionName=1.7.2' \
@@ -185,16 +142,9 @@ class TestDreame(unittest.TestCase):
                        'NDM0MSwiYyI6MCwiYiI6IiIsImUiOiIiLCJpc0F1dGhvciI6ZmFsc2V9' \
                        '&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379&appKey=201020412' \
                        '&page=1&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_4 = self.s.get(url_4)
-            pprint(result_4.json())
-            t = result_4.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_4)
         print("-----------------------------------------")
-        url_5 = host + '/Message/getSepUnreadMessage?timezone=Asia%2FShanghai' \
+        url_5 = '/Message/getSepUnreadMessage?timezone=Asia%2FShanghai' \
                        '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                        '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                        '&sign=296d345a8a679e6ba501234c5bd2c098&mcc=460&versionName=1.7.2' \
@@ -208,18 +158,11 @@ class TestDreame(unittest.TestCase):
                        'V9&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                        '&appKey=201020412&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5' \
                        '&timestamp=0'
-        try:
-            result_5 = self.s.get(url_5)
-            pprint(result_5.json())
-            t = result_5.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_5)
 
     def test_005_library_sel_article_page(self):
         print("----在书城页面，选择任意一本多章节书，测试用户可以自主选择章节内容的功能----")
-        url_5 = host + '/api/readV1?timezone=Asia%2FShanghai&sex=1&userKeyWithoutImei=e694c359a708' \
+        url_5 = '/api/readV1?timezone=Asia%2FShanghai&sex=1&userKeyWithoutImei=e694c359a708' \
                        'd6ceda7ae2dd9fe6cacd&channel=dreameapp-23&advertising_id=7a6c42' \
                        'db-2852-4db4-9206-47184fa7b8dd&sign=1fb05a95f7da7755be457d09a1929f22' \
                        '&mcc=460&versionName=1.7.2&deviceId=6fb3537dbc70aad5&uuid=0cd7ed1a-22' \
@@ -232,18 +175,11 @@ class TestDreame(unittest.TestCase):
                        '6IiIsImUiOiIiLCJpc0F1dGhvciI6ZmFsc2V9&chapterId=EujTCbLEkpgWh%2BU' \
                        'Y64WoSg%3D%3D&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                        '&appKey=201020412&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_5 = self.s.get(url_5)
-            pprint(result_5.json())
-            t = result_5.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_5)
 
     def test_006_library_unclear_book_name_search(self):
         print("----在书城页面，根据书名模糊搜索一本书且能正常阅读的功能----")
-        url_6 = host + '/api/search?keywords=the+lone&timezone=Asia%2FShanghai&userKeyWithoutI' \
+        url_6 = '/api/search?keywords=the+lone&timezone=Asia%2FShanghai&userKeyWithoutI' \
                        'mei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23&sign=44afd3a' \
                        '421874975f74c928d6a222976&source=3&mcc=460&versionName=1.7.2&kwType=0' \
                        '&deviceId=6fb3537dbc70aad5&uuid=0cd7ed1a-22e1-490e-84d0-6e8d64d3ecdf' \
@@ -256,16 +192,9 @@ class TestDreame(unittest.TestCase):
                        'IjoiIiwibiI6IkhGUkU0Mjk2MDAwMzYzIiwiaSI6IiIsInMiOiIwIiwibSI6MTU5MTU4NDM0' \
                        'MSwiYyI6MCwiYiI6IiIsImUiOiIiLCJpc0F1dGhvciI6ZmFsc2V9' \
                        '&distinct_id=6fb3537dbc70aad5&imei=357052092096379&interfaceCode=122'
-        try:
-            result_6 = self.s.get(url_6)
-            print(result_6.json())
-            t = result_6.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_6)
         print("-----------------------------------------")
-        url_6_1 = host + '/api/bookInfo?bookshelf=6u9rGU%2F0FVMUPiItbX9ALQ%3D%3D%2CvhRlO%2Fp2LPt1' \
+        url_6_1 = '/api/bookInfo?bookshelf=6u9rGU%2F0FVMUPiItbX9ALQ%3D%3D%2CvhRlO%2Fp2LPt1' \
                          '3fjpOFoo0Q%3D%3D%2CRvdq9VhPzTLkgyHofVE8Pw%3D%3D%2CR5NDszuwekbhS0c3i3%2Bc' \
                          'yg%3D%3D%2C%2BiEFxZxn8dAqSMaLzMv%2Fjw%3D%3D%2C6sB5aEzcmvjSF5yvPF' \
                          'DGOQ%3D%3D&timezone=Asia%2FShanghai&userKeyWithoutImei=e694c359a708d6' \
@@ -283,16 +212,9 @@ class TestDreame(unittest.TestCase):
                          '6ZmFsc2V9&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                          '&appKey=201020412&id=8rsCWXiM6QUCApeco5HOPw%3D%3D&interfaceCode=122' \
                          '&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_6_1 = self.s.get(url_6_1)
-            print(result_6_1.json())
-            t = result_6_1.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_6_1)
         print("-----------------------------------------")
-        url_6_2 = host + '/api/readV1?timezone=Asia%2FShanghai&sex=1&userKeyWithoutImei=e694c359a' \
+        url_6_2 = '/api/readV1?timezone=Asia%2FShanghai&sex=1&userKeyWithoutImei=e694c359a' \
                          '708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23&advertising_id=7a6c42db-28' \
                          '52-4db4-9206-47184fa7b8dd&sign=eafc1c5ee768d485d6b260059febb9c3&mcc=460' \
                          '&versionName=1.7.2&deviceId=6fb3537dbc70aad5' \
@@ -306,18 +228,11 @@ class TestDreame(unittest.TestCase):
                          'iIsImUiOiIiLCJpc0F1dGhvciI6ZmFsc2V9&chapterId=cCrJo30Q6ljmZGN' \
                          'T1intTg%3D%3D&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                          '&appKey=201020412&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_6_2 = self.s.get(url_6_2)
-            print(result_6_2.json())
-            t = result_6_2.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_6_2)
 
     def test_007_library_unclear_writer_name_search(self):
         print("----在书城页面，根据作者名模糊搜索其书籍且能查看正常阅读这些书籍的功能--")
-        url_7 = host + '/api/search?keywords=Tasha+%28Tashie%29&timezone=Asia%2FShanghai' \
+        url_7 = '/api/search?keywords=Tasha+%28Tashie%29&timezone=Asia%2FShanghai' \
                        '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                        '&sign=50f9b88bdb8ab815b6a12132925df006&source=3&mcc=460&versionName=1.7.2' \
                        '&kwType=2&deviceId=6fb3537dbc70aad5&uuid=0cd7ed1a-22e1-490e-84d0-6e8d64d3ecdf' \
@@ -330,16 +245,9 @@ class TestDreame(unittest.TestCase):
                        'kU0Mjk2MDAwMzYzIiwiaSI6IiIsInMiOiIwIiwibSI6MTU5MTU4NDM0MSwiYyI6MCwiYiI6Ii' \
                        'IsImUiOiIiLCJpc0F1dGhvciI6ZmFsc2V9&distinct_id=6fb3537dbc70aad5' \
                        '&imei=357052092096379&interfaceCode=122'
-        try:
-            result_7 = self.s.get(url_7)
-            print(result_7.json())
-            t = result_7.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_7)
         print("-----------------------------------------")
-        url_7_1 = host + '/api/bookInfo?bookshelf=6u9rGU%2F0FVMUPiItbX9ALQ%3D%3D%2CvhRlO%2Fp2LPt' \
+        url_7_1 = '/api/bookInfo?bookshelf=6u9rGU%2F0FVMUPiItbX9ALQ%3D%3D%2CvhRlO%2Fp2LPt' \
                          '13fjpOFoo0Q%3D%3D%2CRvdq9VhPzTLkgyHofVE8Pw%3D%3D%2CR5NDszuwekbhS0c3i3%2B' \
                          'cyg%3D%3D%2C%2BiEFxZxn8dAqSMaLzMv%2Fjw%3D%3D%2C6sB5aEzcmvjSF5yvPFD' \
                          'GOQ%3D%3D&timezone=Asia%2FShanghai&userKeyWithoutImei=e694c359a708d6ce' \
@@ -357,16 +265,9 @@ class TestDreame(unittest.TestCase):
                          'vciI6ZmFsc2V9&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                          '&appKey=201020412&id=8rsCWXiM6QUCApeco5HOPw%3D%3D&interfaceCode=122' \
                          '&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_7_1 = self.s.get(url_7_1)
-            print(result_7_1.json())
-            t = result_7_1.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_7_1)
         print("-----------------------------------------")
-        url_7_2 = host + '/api/readV1?timezone=Asia%2FShanghai&sex=1&userKeyWithoutImei=e694c359a7' \
+        url_7_2 = '/api/readV1?timezone=Asia%2FShanghai&sex=1&userKeyWithoutImei=e694c359a7' \
                          '08d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                          '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                          '&sign=7fb9f86313218b39c73e92a85adceddb&mcc=460&versionName=1.7.2' \
@@ -381,18 +282,11 @@ class TestDreame(unittest.TestCase):
                          'DplC2nfw%3D%3D&distinct_id=6fb3537dbc70aad5&osType=0' \
                          '&imei=357052092096379&appKey=201020412&interfaceCode=122&apiLevel=28' \
                          '&androidId=6fb3537dbc70aad5'
-        try:
-            result_7_2 = self.s.get(url_7_2)
-            print(result_7_2.json())
-            t = result_7_2.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_7_2)
 
-    def test_008_library_oclock_timelist(self):
+    def test_008_library_clock_time_list(self):
         print("----在书城页面，点击右上角的“时刻表”，测试其能正常跳转到可解锁书籍查看界面的功能----")
-        url_8 = host + '/calendar/getNewCalendarContent?timezone=Asia%2FShanghai' \
+        url_8 = '/calendar/getNewCalendarContent?timezone=Asia%2FShanghai' \
                        '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                        '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                        '&sign=718f33fc1a7b110f9d20399ef8f9a767&mcc=460&versionName=1.7.2' \
@@ -405,16 +299,9 @@ class TestDreame(unittest.TestCase):
                        'M0MSwiYyI6MCwiYiI6IiIsImUiOiIiLCJpc0F1dGhvciI6ZmFsc2V9' \
                        '&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379&appKey=201020412' \
                        '&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_8 = self.s.get(url_8)
-            print(result_8.json())
-            t = result_8.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_8)
         print("-----------------------------------------")
-        url_8_1 = host + '/Calendar/bookRecommend?bookshelf=6u9rGU%2F0FVMUPiItbX9ALQ%3D%3D%2Cvh' \
+        url_8_1 = '/Calendar/bookRecommend?bookshelf=6u9rGU%2F0FVMUPiItbX9ALQ%3D%3D%2Cvh' \
                          'RlO%2Fp2LPt13fjpOFoo0Q%3D%3D%2CRvdq9VhPzTLkgyHofVE8Pw%3D%3D%2CR5NDszuw' \
                          'ekbhS0c3i3%2Bcyg%3D%3D%2C%2BiEFxZxn8dAqSMaLzMv%2Fjw%3D%3D%2C6sB5aEzcmv' \
                          'jSF5yvPFDGOQ%3D%3D&timezone=Asia%2FShanghai&userKeyWithoutImei=e694c3' \
@@ -430,18 +317,11 @@ class TestDreame(unittest.TestCase):
                          'MCwiYiI6IiIsImUiOiIiLCJpc0F1dGhvciI6ZmFsc2V9&distinct_id=6fb3537dbc70aad5' \
                          '&osType=0&imei=357052092096379&appKey=201020412&interfaceCode=122' \
                          '&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_8_1 = self.s.get(url_8_1)
-            print(result_8_1.json())
-            t = result_8_1.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_8_1)
 
     def test_009_library_next_article_reading(self):
         print("----对于存在多章节的书籍在该章节阅读完成时，测试其能正常阅读下一章节的功能----")
-        url_9 = host + '/api/readV1?timezone=Asia%2FShanghai&sex=1' \
+        url_9 = '/api/readV1?timezone=Asia%2FShanghai&sex=1' \
                        '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                        '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                        '&sign=b78961756c8b99642765d05e3b2853f4&mcc=460&versionName=1.7.2' \
@@ -456,19 +336,13 @@ class TestDreame(unittest.TestCase):
                        '6ZmFsc2V9&chapterId=4WmrQSbPh8dZb0su5lkjRA%3D%3D&distinct_id=6fb3537dbc70aad5' \
                        '&osType=0&imei=357052092096379&appKey=201020412&interfaceCode=122' \
                        '&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_9 = self.s.get(url_9)
-            print(result_9.json())
-            t = result_9.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_9)
 
+    @pytest.mark.skip
     def test_010_case(self):  # 未完成
         print("----当用户余额足够时，测试其能正常购买收费章节书的功能----")
         print("----查询用户钱包余额----")
-        url_wallet = host + '/user/getUserInfo?timezone=Asia%2FShanghai' \
+        url_wallet = '/user/getUserInfo?timezone=Asia%2FShanghai' \
                             '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd' \
                             '&channel=dreameapp-23&advertising_id=7a6c42db-2852-4db4-9206-47184fa' \
                             '7b8dd&sign=718f33fc1a7b110f9d20399ef8f9a767&mcc=460&versionName=1.7.2' \
@@ -491,7 +365,7 @@ class TestDreame(unittest.TestCase):
         money = int(wallet_coin)
         if money > 30:
             print("----购买章节----")
-            url_10 = host + '/api/payBuy?timezone=Asia%2FShanghai&sex=1' \
+            url_10 = '/api/payBuy?timezone=Asia%2FShanghai&sex=1' \
                             '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd' \
                             '&channel=dreameapp-23&advertising_id=7a6c42db-2852-4db4-9206-47184f' \
                             'a7b8dd&sign=0d22f9213cf880d5cf69103eedfc3471&mcc=460&versionName=1.7.2' \
@@ -513,7 +387,7 @@ class TestDreame(unittest.TestCase):
 
     def test_011_bookshelf_save_book_reading(self):
         print("----在书架页面，测试直接点击收藏的书会进入到阅读界面的功能----")
-        url_11 = host + '/api/getChapList?timezone=Asia%2FShanghai' \
+        url_11 = '/api/getChapList?timezone=Asia%2FShanghai' \
                         '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                         '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                         '&sign=1c7e5a5ded0bd26562f15312c2b76356&mcc=460&versionName=1.7.2' \
@@ -527,18 +401,11 @@ class TestDreame(unittest.TestCase):
                         '6ZmFsc2V9&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                         '&appKey=201020412&id=6sB5aEzcmvjSF5yvPFDGOQ%3D%3D&interfaceCode=122' \
                         '&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_11 = self.s.get(url_11)
-            print(result_11.json())
-            t = result_11.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_11)
 
-    def test_012_bookshelf_gift_tasklist(self):
+    def test_012_bookshelf_gift_task_list(self):
         print("----在书架页面，点击右上角的“礼包”，测试能正常跳转到任务管理界面的功能----")
-        url_12 = host_www + '/api/getUserTask?u=eyJxIjo0Mjk2MDAwMzYzLCJNIjoiIiwibiI6IkhGUkU0Mjk2M' \
+        url_12 = '/api/getUserTask?u=eyJxIjo0Mjk2MDAwMzYzLCJNIjoiIiwibiI6IkhGUkU0Mjk2M' \
                             'DAwMzYzIiwiaSI6IiIsInMiOiIwIiwibSI6MTU5MTU4NDM0MSwiYyI6MCwiYiI6IiIs' \
                             'ImUiOiIiLCJpc0F1dGhvciI6ZmFsc2V9&s=eyJrIjoiMWMyYzg5ZTY5MzhlMDFmZjA' \
                             'wNDQ0ZWI1YjVhMjFmMDYiLCJTIjoiamluZ3l1IiwidiI6IjEuMCIsImEiOjEsIkwiOj' \
@@ -547,16 +414,9 @@ class TestDreame(unittest.TestCase):
                             '&deviceId=6fb3537dbc70aad5&newUserIndex=2&mcc=460' \
                             '&timezone=Asia%2FShanghai&channel=dreameapp-23&versionCode=120' \
                             '&versionName=1.7.2&bookshelfCount=1&loginType=10&isAuthor=0&osType=0&tag=task'
-        try:
-            result_12 = self.s.get(url_12)
-            print(result_12.json())
-            t = result_12.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req_www(url_12)
         print("-----------------------------------------")
-        url_12_1 = host_www + '/api/getTodayTaskInfo?u=eyJxIjo0Mjk2MDAwMzYzLCJNIjoiIiwibiI6IkhGUkU' \
+        url_12_1 = '/api/getTodayTaskInfo?u=eyJxIjo0Mjk2MDAwMzYzLCJNIjoiIiwibiI6IkhGUkU' \
                               '0Mjk2MDAwMzYzIiwiaSI6IiIsInMiOiIwIiwibSI6MTU5MTU4NDM0MSwiYyI6MCwiY' \
                               'iI6IiIsImUiOiIiLCJpc0F1dGhvciI6ZmFsc2V9&s=eyJrIjoiMWMyYzg5ZTY5Mzhl' \
                               'MDFmZjAwNDQ0ZWI1YjVhMjFmMDYiLCJTIjoiamluZ3l1IiwidiI6IjEuMCIsImEiOj' \
@@ -566,16 +426,9 @@ class TestDreame(unittest.TestCase):
                               '&newUserIndex=2&mcc=460&timezone=Asia%2FShanghai&channel=dreameapp-23' \
                               '&versionCode=120&versionName=1.7.2&bookshelfCount=1&loginType=10' \
                               '&isAuthor=0&osType=0'
-        try:
-            result_12_1 = self.s.get(url_12_1)
-            print(result_12_1.json())
-            t = result_12_1.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req_www(url_12_1)
         print("-----------------------------------------")
-        url_12_2 = host_www + '/api/getTomorrowTask?u=eyJxIjo0Mjk2MDAwMzYzLCJNIjoiIiwibiI6Ikh' \
+        url_12_2 = '/api/getTomorrowTask?u=eyJxIjo0Mjk2MDAwMzYzLCJNIjoiIiwibiI6Ikh' \
                               'GUkU0Mjk2MDAwMzYzIiwiaSI6IiIsInMiOiIwIiwibSI6MTU5MTU4NDM0MSwiYy' \
                               'I6MCwiYiI6IiIsImUiOiIiLCJpc0F1dGhvciI6ZmFsc2V9&s=eyJrIjoiMWMyYzg5' \
                               'ZTY5MzhlMDFmZjAwNDQ0ZWI1YjVhMjFmMDYiLCJTIjoiamluZ3l1IiwidiI6IjEuM' \
@@ -585,18 +438,11 @@ class TestDreame(unittest.TestCase):
                               '&newUserIndex=2&mcc=460&timezone=Asia%2FShanghai&channel=dreameapp-23' \
                               '&versionCode=120&versionName=1.7.2&bookshelfCount=1&loginType=10' \
                               '&isAuthor=0&osType=0'
-        try:
-            result_12_2 = self.s.get(url_12_2)
-            print(result_12_2.json())
-            t = result_12_2.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req_www(url_12_2)
 
-    def test_013_tasklist_reading_task_turn(self):
+    def test_013_task_list_reading_task_turn(self):
         print("----在任务管理界面，点击“阅读”任务，测试其能正常跳转到书架（可配置）页面的功能----")
-        url_13 = host + '/api/getAll?timezone=Asia%2FShanghai&userKeyWithoutImei=e694c359a708d' \
+        url_13 = '/api/getAll?timezone=Asia%2FShanghai&userKeyWithoutImei=e694c359a708d' \
                         '6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                         '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                         '&sign=3a7f7d722641893216a93b158260d0ea&type=54&mcc=460&versionName=1.7.2' \
@@ -610,18 +456,11 @@ class TestDreame(unittest.TestCase):
                         'I6ZmFsc2V9&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                         '&isSuggest=1&appKey=201020412&interfaceCode=122&apiLevel=28' \
                         '&androidId=6fb3537dbc70aad5'
-        try:
-            result_13 = self.s.get(url_13)
-            print(result_13.json())
-            t = result_13.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_13)
 
-    def test_014_bookshelf_timeOclock_unlock_book(self):
+    def test_014_bookshelf_time_clock_unlock_book(self):
         print("----在书架页面，点击右上角的“时刻钟”按钮，测试其能正常跳转到解锁书籍界面的功能----")
-        url_14 = host + '/calendar/getNewCalendarContent?timezone=Asia%2FShanghai' \
+        url_14 = '/calendar/getNewCalendarContent?timezone=Asia%2FShanghai' \
                         '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd' \
                         '&channel=dreameapp-23&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                         '&sign=718f33fc1a7b110f9d20399ef8f9a767&mcc=460&versionName=1.7.2' \
@@ -634,18 +473,11 @@ class TestDreame(unittest.TestCase):
                         'InMiOiIwIiwibSI6MTU5MTU4NDM0MSwiYyI6MCwiYiI6IiIsImUiOiIiLCJpc0F1dGhvci' \
                         'I6ZmFsc2V9&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                         '&appKey=201020412&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_14 = self.s.get(url_14)
-            pprint(result_14.json())
-            t = result_14.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_14)
 
-    def test_015_bookshelf_unclear_bookname_api_search(self):
+    def test_015_bookshelf_unclear_book_name_api_search(self):
         print("----在书架页面，根据书名模糊搜索一本书且能正常阅读的功能----")
-        url_15 = host + '/api/search?keywords=Wolf&timezone=Asia%2FShanghai' \
+        url_15 = '/api/search?keywords=Wolf&timezone=Asia%2FShanghai' \
                         '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                         '&sign=9535651e879ece1354ac9ed7f113a0ba&source=3&mcc=460&versionName=1.7.2' \
                         '&kwType=2&deviceId=6fb3537dbc70aad5' \
@@ -660,16 +492,9 @@ class TestDreame(unittest.TestCase):
                         'InMiOiIwIiwibSI6MTU5MTU4NDM0MSwiYyI6MCwiYiI6IiIsImUiOiIiLCJpc0F1dGhvci' \
                         'I6ZmFsc2V9&distinct_id=6fb3537dbc70aad5&imei=357052092096379' \
                         '&interfaceCode=122'
-        try:
-            result_15 = self.s.get(url_15)
-            print(result_15.json())
-            t = result_15.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_15)
         print("-----------------------------------------")
-        url_15_1 = host + '/api/bookInfo?bookshelf=6u9rGU%2F0FVMUPiItbX9ALQ%3D%3D%2CvhRlO%2Fp2LP' \
+        url_15_1 = '/api/bookInfo?bookshelf=6u9rGU%2F0FVMUPiItbX9ALQ%3D%3D%2CvhRlO%2Fp2LP' \
                           't13fjpOFoo0Q%3D%3D%2CRvdq9VhPzTLkgyHofVE8Pw%3D%3D%2CR5NDszuwekbh' \
                           'S0c3i3%2Bcyg%3D%3D%2C%2BiEFxZxn8dAqSMaLzMv%2Fjw%3D%3D%2C6sB5aEzcmvjS' \
                           'F5yvPFDGOQ%3D%3D&timezone=Asia%2FShanghai' \
@@ -687,16 +512,9 @@ class TestDreame(unittest.TestCase):
                           'I6ZmFsc2V9&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                           '&appKey=201020412&id=%2BIoJltntt7k0ftGy3YzEhg%3D%3D&interfaceCode=122' \
                           '&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_15_1 = self.s.get(url_15_1)
-            print(result_15_1.json())
-            t = result_15_1.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_15_1)
         print("-----------------------------------------")
-        url_15_2 = host + '/api/readV1?timezone=Asia%2FShanghai&sex=1' \
+        url_15_2 = '/api/readV1?timezone=Asia%2FShanghai&sex=1' \
                           '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd' \
                           '&channel=dreameapp-23&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b' \
                           '8dd&sign=730fd6be12a53c7ddd031bd08c2ec252&mcc=460&versionName=1.7.2' \
@@ -712,18 +530,11 @@ class TestDreame(unittest.TestCase):
                           '&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                           '&appKey=201020412&interfaceCode=122&apiLevel=28' \
                           '&androidId=6fb3537dbc70aad5'
-        try:
-            result_15_2 = self.s.get(url_15_2)
-            print(result_15_2.json())
-            t = result_15_2.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_15_2)
 
-    def test_016_bookshelf_unclear_writername_api_search(self):
+    def test_016_bookshelf_unclear_writer_name_api_search(self):
         print("----在书架页面，根据作者名模糊搜索其书籍且能查看正常阅读这些书籍的功能----")
-        url_16 = host + '/api/search?keywords=coming&timezone=Asia%2FShanghai' \
+        url_16 = '/api/search?keywords=coming&timezone=Asia%2FShanghai' \
                         '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                         '&sign=84be9400a27ed5cf1ff5e774f819e384&source=3&mcc=460&versionName=1.7.2' \
                         '&kwType=0&deviceId=6fb3537dbc70aad5' \
@@ -738,16 +549,9 @@ class TestDreame(unittest.TestCase):
                         'nMiOiIwIiwibSI6MTU5MTU4NDM0MSwiYyI6MCwiYiI6IiIsImUiOiIiLCJpc0F1dGhvciI' \
                         '6ZmFsc2V9&distinct_id=6fb3537dbc70aad5' \
                         '&imei=357052092096379&interfaceCode=122'
-        try:
-            result_16 = self.s.get(url_16)
-            print(result_16.json())
-            t = result_16.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_16)
         print("-----------------------------------------")
-        url_16_1 = host + '/api/bookInfo?bookshelf=6u9rGU%2F0FVMUPiItbX9ALQ%3D%3D%2CvhRlO%2Fp2LP' \
+        url_16_1 = '/api/bookInfo?bookshelf=6u9rGU%2F0FVMUPiItbX9ALQ%3D%3D%2CvhRlO%2Fp2LP' \
                           't13fjpOFoo0Q%3D%3D%2CRvdq9VhPzTLkgyHofVE8Pw%3D%3D%2CR5NDszuwekbhS0c' \
                           '3i3%2Bcyg%3D%3D%2C%2BiEFxZxn8dAqSMaLzMv%2Fjw%3D%3D%2C6sB5aEzcmvjSF5y' \
                           'vPFDGOQ%3D%3D&timezone=Asia%2FShanghai' \
@@ -765,16 +569,9 @@ class TestDreame(unittest.TestCase):
                           'OiIiLCJpc0F1dGhvciI6ZmFsc2V9&distinct_id=6fb3537dbc70aad5&osType=0' \
                           '&imei=357052092096379&appKey=201020412&id=6u9rGU%2F0FVMUPiItb' \
                           'X9ALQ%3D%3D&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_16_1 = self.s.get(url_16_1)
-            print(result_16_1.json())
-            t = result_16_1.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_16_1)
         print("-----------------------------------------")
-        url_16_2 = host + '/api/readV1?timezone=Asia%2FShanghai&sex=1' \
+        url_16_2 = '/api/readV1?timezone=Asia%2FShanghai&sex=1' \
                           '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                           '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                           '&sign=353fb8b8627e0c433c1de3b6d51d0e0f&mcc=460&versionName=1.7.2' \
@@ -789,18 +586,11 @@ class TestDreame(unittest.TestCase):
                           'MYvcA%3D%3D&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                           '&appKey=201020412&interfaceCode=122&apiLevel=28' \
                           '&androidId=6fb3537dbc70aad5'
-        try:
-            result_16_2 = self.s.get(url_16_2)
-            print(result_16_2.json())
-            t = result_16_2.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_16_2)
 
     def test_017_bookshelf_site_message(self):
         print("----在书架页面，点击右上角的“会话”按钮，测试其能正常进入到站内信界面的功能----")
-        url_17 = host + '/Message/getSepUnreadMessage?timezone=Asia%2FShanghai' \
+        url_17 = '/Message/getSepUnreadMessage?timezone=Asia%2FShanghai' \
                         '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd' \
                         '&channel=dreameapp-23&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                         '&sign=296d345a8a679e6ba501234c5bd2c098&mcc=460&versionName=1.7.2' \
@@ -814,16 +604,9 @@ class TestDreame(unittest.TestCase):
                         '&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                         '&appKey=201020412&interfaceCode=122&apiLevel=28' \
                         '&androidId=6fb3537dbc70aad5&timestamp=0'
-        try:
-            result_17 = self.s.get(url_17)
-            print(result_17.json())
-            t = result_17.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_17)
         print("-----------------------------------------")
-        url_17_1 = host + '/Message/getNewMessage?timezone=Asia%2FShanghai' \
+        url_17_1 = '/Message/getNewMessage?timezone=Asia%2FShanghai' \
                           '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                           '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                           '&sign=3c10273fcab950d4f2df412bfa47e449&type=0&mcc=460&versionName=1.7.2' \
@@ -837,18 +620,11 @@ class TestDreame(unittest.TestCase):
                           'I6ZmFsc2V9&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                           '&appKey=201020412&page=1&interfaceCode=122&apiLevel=28' \
                           '&androidId=6fb3537dbc70aad5'
-        try:
-            result_17_1 = self.s.get(url_17_1)
-            print(result_17_1.json())
-            t = result_17_1.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_17_1)
 
-    def test_018_bookshelf_unfollow_book(self):
+    def test_018_bookshelf_un_follow_book(self):
         print("----在书架页面，测试取消一本收藏书籍的功能运行正确----")
-        url_18 = host + '/apiBookshelf/batchUnfollow?timezone=Asia%2FShanghai&sex=1' \
+        url_18 = '/apiBookshelf/batchUnfollow?timezone=Asia%2FShanghai&sex=1' \
                         '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                         '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                         '&sign=6720ac191dc5612e9ff2c2fbf0a5f32a&mcc=460&versionName=1.7.2' \
@@ -862,18 +638,11 @@ class TestDreame(unittest.TestCase):
                         'mFsc2V9&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                         '&appKey=201020412&bid=6sB5aEzcmvjSF5yvPFDGOQ%3D%3D&interfaceCode=122' \
                         '&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_18 = self.s.get(url_18)
-            pprint(result_18.json())
-            t = result_18.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_18)
 
     def test_019_bookshelf_piliang_cancle_books(self):
         print("----在书架页面，测试批量取消多本收藏书籍的功能运行正确----")
-        url_19 = host + '/apiBookshelf/batchUnfollow?timezone=Asia%2FShanghai&sex=1' \
+        url_19 = '/apiBookshelf/batchUnfollow?timezone=Asia%2FShanghai&sex=1' \
                         '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                         '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                         '&sign=38db412505f967ce3dbbd83bdb8720d5&mcc=460&versionName=1.7.2' \
@@ -887,18 +656,11 @@ class TestDreame(unittest.TestCase):
                         '&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                         '&appKey=201020412&bid=vhRlO%2Fp2LPt13fjpOFoo0Q%3D%3D%2C6u9rGU%2F0FVMUPiI' \
                         'tbX9ALQ%3D%3D&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5'
-        try:
-            result_19 = self.s.get(url_19)
-            pprint(result_19.json())
-            t = result_19.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_19)
 
-    def test_020_myaccount_inbox_function(self):
+    def test_020_my_account_inbox_function(self):
         print("----在“我的”界面，测试点击inbox能正常进入到短信及站内信界面的功能----")
-        url_20 = host + '/Message/getSepUnreadMessage?timezone=Asia%2FShanghai' \
+        url_20 = '/Message/getSepUnreadMessage?timezone=Asia%2FShanghai' \
                         '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                         '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                         '&sign=296d345a8a679e6ba501234c5bd2c098&mcc=460&versionName=1.7.2' \
@@ -912,16 +674,9 @@ class TestDreame(unittest.TestCase):
                         'Fsc2V9&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                         '&appKey=201020412&interfaceCode=122&apiLevel=28&androidId=6fb3537dbc70aad5' \
                         '&timestamp=0'
-        try:
-            result_20 = self.s.get(url_20)
-            pprint(result_20.json())
-            t = result_20.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_20)
         print("-----------------------------------------")
-        url_20_1 = host + '/Message/getNewMessage?timezone=Asia%2FShanghai' \
+        url_20_1 = '/Message/getNewMessage?timezone=Asia%2FShanghai' \
                           '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd&channel=dreameapp-23' \
                           '&advertising_id=7a6c42db-2852-4db4-9206-47184fa7b8dd' \
                           '&sign=3c10273fcab950d4f2df412bfa47e449&type=0&mcc=460&versionName=1.7.2' \
@@ -935,14 +690,7 @@ class TestDreame(unittest.TestCase):
                           'ciI6ZmFsc2V9&distinct_id=6fb3537dbc70aad5&osType=0&imei=357052092096379' \
                           '&appKey=201020412&page=1&interfaceCode=122&apiLevel=28' \
                           '&androidId=6fb3537dbc70aad5'
-        try:
-            result_20_1 = self.s.get(url_20_1)
-            pprint(result_20_1.json())
-            t = result_20_1.json()
-            self.assertEqual(0, t["status"], msg="Fail Detail")
-        except Exception as e:
-            print("!!!Warning!!! HTTP请求失败 :%s" % e)
-            raise e
+        Http_Req().http_req(url_20_1)
 
 
 if __name__ == '__main__':
