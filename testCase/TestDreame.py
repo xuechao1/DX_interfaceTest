@@ -10,6 +10,8 @@ from pprint import pprint
 from config.http_req import Http_Req
 from config import readConfig
 
+
+
 read_conf = readConfig.ReadConfig()
 sys.path.append("D:\\PycharmProjects\\DX_interfaceTest")
 host = 'http://3.85.16.233:32100'
