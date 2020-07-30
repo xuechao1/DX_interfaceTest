@@ -4,6 +4,7 @@ import sys
 import requests
 import warnings
 import unittest
+import pytest
 from pprint import pprint
 
 sys.path.append("D:\\PycharmProjects\\DX_interfaceTest")
@@ -19,7 +20,7 @@ class TestDreame(unittest.TestCase):
         self.s = requests.session()
         print("----开始执行测试用例  start ----")
 
-    def test_000_visitor_login(self):
+    def test_000_0_visitor_login(self):
         """
         ---测试游客用户能正常登录APP的功能----
         :return:
@@ -46,8 +47,8 @@ class TestDreame(unittest.TestCase):
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
 
-    def test_001_library_book_reading(self):
-        print("----在书城页面，选择任意一本书籍，测试能正常阅读的功能----")
+    @pytest.mark.skip
+    def test_000_1_book_list(self):
         print("----获取书城的书籍列表----")
         url_0 = host + '/Discover?timezone=Asia%2FShanghai' \
                        '&userKeyWithoutImei=e694c359a708d6ceda7ae2dd9fe6cacd' \
@@ -70,6 +71,9 @@ class TestDreame(unittest.TestCase):
         except Exception as e:
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
+
+    def test_001_library_book_reading(self):
+        print("----在书城页面，选择任意一本书籍，测试能正常阅读的功能----")
         print("-----------------------------------------")
         url_1 = host + '/api/bookInfo?bookshelf=6u9rGU%2F0FVMUPiItbX9ALQ%3D%3D%2CvhRlO%2Fp2LPt13f' \
                        'jpOFoo0Q%3D%3D%2CRvdq9VhPzTLkgyHofVE8Pw%3D%3D%2CR5NDszuwekbhS0c3i3%2B' \
