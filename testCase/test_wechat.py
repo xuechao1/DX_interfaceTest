@@ -66,6 +66,7 @@ class TestWeChat:
         assert '打卡成功' in result
 
     @allure.title("测试用例2--删除联系人")
+    @pytest.mark.testcase
     def test_02_del_man(self):
         """
         删除账号
@@ -77,6 +78,7 @@ class TestWeChat:
         self.driver.find_element(MobileBy.ID, "com.tencent.wework:id/ber").click()  # 确认按钮
         time.sleep(1.5)
 
+    @pytest.mark.testcase
     @pytest.mark.parametrize("name,tel_num", [("云潇1", "15915766618"), ("潇潇", "15915766617"), ("潇潇云", "15915766620")])
     def test_04_pi_add_man(self, name, tel_num):
         """
@@ -98,6 +100,7 @@ class TestWeChat:
         self.driver.find_element(MobileBy.XPATH, "//*[contains(@text, '消息')]").click()
         time.sleep(1)
 
+    @pytest.mark.testcase
     @allure.title("测试用例3--添加联系人")
     def test_03_add_man(self):
         """
