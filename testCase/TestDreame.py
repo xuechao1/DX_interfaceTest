@@ -11,7 +11,6 @@ from config.http_req import Http_Req
 from config import readConfig
 
 
-
 read_conf = readConfig.ReadConfig()
 sys.path.append("D:\\PycharmProjects\\DX_interfaceTest")
 host = 'http://3.85.16.233:32100'
@@ -33,8 +32,7 @@ class TestDreame(unittest.TestCase):
         :return:
         """
         print("----测试游客用户能正常登录APP的功能----")
-        url = "/api/visitorLogin?" \
-              "deviceId=ce22584ad748d9ec&" \
+        url = "/api/visitorLogin?deviceId=ce22584ad748d9ec&" \
               "appKey=201020412&versionCode=121&uuid=91a601bf-e555-4beb-9518-f6473284f9ef&" \
               "appLanguage=en&interfaceCode=122&code=5b5b0d6cc931bdaac02d3eb5d79440af&" \
               "androidId=ce22584ad748d9ec&originProduct=4&imei=ce22584ad748d9ec&" \
