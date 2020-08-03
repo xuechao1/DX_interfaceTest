@@ -6,7 +6,7 @@ import unittest
 from common.configEmail import *
 from HTMLTestRunner import HTMLTestRunner  # 把html的py文件导入到lib文件夹下
 from testCase import TestInnovel
-from testCase import TestDreame
+from testCase import TestDreameOlder
 from testCase import TestEmailDreame
 
 
@@ -18,7 +18,7 @@ class Run_case(object):
         suite = unittest.TestSuite()  # 创建用例搜集容器
         ts = unittest.TestLoader()  # 创建用例加载器
         # 从模块中加载，加载test开头的用例
-        suite.addTests(ts.loadTestsFromModule(TestDreame))  # 传入模块名--APP游客登录测试脚本名
+        suite.addTests(ts.loadTestsFromModule(TestDreameOlder))  # 传入模块名--APP游客登录测试脚本名
         # suite.addTests(ts.loadTestsFromModule(TestEmailDreame))  # APP邮件登录测试脚本名
         # suite.addTests(ts.loadTestsFromModule(TestInnovel))
         """

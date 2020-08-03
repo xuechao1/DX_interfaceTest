@@ -48,7 +48,7 @@ class Send_Email():
         # 单个收件人接收邮件，直接是receiver='XXX@163.com'
         # receiver = addressee  # ['xuechao@stary.ltd']
         # 多人接收邮件
-        receiver = ['xuechao@stary.ltd','14787184016@163.com','yuyuanhui@stary.ltd']
+        receiver = ['xuechao@stary.ltd','14787184016@163.com','yuyuanhui@stary.ltd','wanglu2@stary.ltd']
         # 发送邮件主题
         subject = 'Dreame_APP_接口自动化测试报告'
         msg = MIMEMultipart('mixed')

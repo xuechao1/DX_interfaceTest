@@ -5,6 +5,7 @@ import re
 import sys
 import requests
 import unittest
+import pytest
 
 host = 'http://3.85.16.233:32100'
 host_www = 'http://activity.dreame.com/'
@@ -13,7 +14,8 @@ sys.path.append("D:\\PycharmProjects\\DX_interfaceTest")
 
 class Http_Req(unittest.TestCase):
 
-    def test_http_req(self, url):
+    @pytest.mark.skip
+    def http_old_req(self, url):
         self.s = requests.session()
         url_0 = host + url
         try:
