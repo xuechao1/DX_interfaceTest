@@ -6,10 +6,12 @@ import sys
 import requests
 import unittest
 import pytest
+from pprint import pprint
 
 host = 'http://3.85.16.233:32100'
 host_www = 'http://activity.dreame.com/'
-sys.path.append("D:\\PycharmProjects\\DX_interfaceTest")
+# sys.path.append("D:\\PycharmProjects\\DX_interfaceTest")
+host_comment = 'http://social.dreame.com'
 
 
 class Http_Req(unittest.TestCase):
@@ -53,6 +55,30 @@ class Http_Req(unittest.TestCase):
             result_0 = self.s.get(url_0)
             t = result_0.json()
             print(t)
+            self.assertEqual(0, t["status"], msg="Fail Detail")
+        except Exception as e:
+            print("!!!Warning!!! HTTP请求失败 :%s" % e)
+            raise e
+
+    def http_email_req(self, url):
+        self.s = requests.session()
+        url1 = host + url
+        try:
+            result = self.s.get(url1)
+            t = result.json()
+            pprint(t)
+            self.assertEqual(0, t["status"], msg="Fail Detail")
+        except Exception as e:
+            print("!!!Warning!!! HTTP请求失败 :%s" % e)
+            raise e
+
+    def http_email_comment_req(self, url):
+        self.s = requests.session()
+        url1 = host_comment + url
+        try:
+            result = self.s.get(url1)
+            t = result.json()
+            pprint(t)
             self.assertEqual(0, t["status"], msg="Fail Detail")
         except Exception as e:
             print("!!!Warning!!! HTTP请求失败 :%s" % e)

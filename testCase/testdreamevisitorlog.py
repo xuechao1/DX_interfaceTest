@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+import time
+import os
 import sys
 import requests
 import warnings
@@ -66,6 +68,8 @@ class TestDreameVisitorLogin(unittest.TestCase):
         timezone = "Asia%2FShanghai"
         global login_type
         login_type = read_conf.get_login_dreame('login_type')
+        global debug
+        debug = read_conf.get_login_dreame('debug')
         global advertising_id
         advertising_id = read_conf.get_login_dreame('advertising_id')
         global oid
