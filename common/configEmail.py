@@ -42,7 +42,7 @@ class Send_Email():
         smtpserver = 'smtp.163.com'
         # 发送邮箱用户名/密码
         user = '14787184016@163.com'
-        password = 'xue10123'
+        password = 'AZAVKTBBMYDGOCGI'
         # 发送邮箱
         sender = cc  # '14787184016@163.com'  # 发件人邮箱(最好写全, 不然会失败)
         # 单个收件人接收邮件，直接是receiver='XXX@163.com'

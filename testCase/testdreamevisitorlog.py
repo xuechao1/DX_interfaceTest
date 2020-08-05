@@ -201,7 +201,9 @@ class TestDreameVisitorLogin(unittest.TestCase):
                f"&page={page}&interfaceCode={interfaceCode}&apiLevel={apiLevel}&androidId={androidId}"
         Http_Req().http_req(url1)
 
+    # @pytest.mark.skip
     @allure.story("在书城页面，选择任意一本多章节书，测试用户可以自主选择章节内容的功能")
+    @allure.description("有时接口反应特别慢")
     def test_007_sel_page(self):
         """
         选择一个章节阅读
