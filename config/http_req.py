@@ -13,6 +13,7 @@ host_www = 'http://activity.dreame.com/'
 # sys.path.append("D:\\PycharmProjects\\DX_interfaceTest")
 host_comment = 'http://social.dreame.com'
 host_lite = 'http://test-api.dreame.com'
+host_lite_activity = 'http://test-activity.dreame.com'
 
 
 class Http_Req(unittest.TestCase):
@@ -94,6 +95,26 @@ class Http_Req(unittest.TestCase):
             if code != 500:
                 result_1 = self.s.get(url_0)
                 t = result_1.json()
+                print("t:", t)
+                self.assertEqual(0, t["status"], msg="Fail Detail")
+            else:
+                print("!!!Warning!!! HTTP请求失败 : 500 错误")
+                print(result_0)
+        except Exception as e:
+            print("!!!Warning!!! HTTP请求失败 :%s" % e)
+            raise e
+
+    def http_lite_activity_req(self, url):
+        self.s = requests.session()
+        url_0 = host_lite_activity + url
+        try:
+            result_0 = str(self.s.get(url_0))
+            data = re.findall(r"\d+", result_0)  # 使用正则过滤  接口返回码
+            code = data[0]
+            if code != 500:
+                result_1 = self.s.get(url_0)
+                t = result_1.json()
+                print("t:", t)
                 self.assertEqual(0, t["status"], msg="Fail Detail")
             else:
                 print("!!!Warning!!! HTTP请求失败 : 500 错误")
