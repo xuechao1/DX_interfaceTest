@@ -1,22 +1,18 @@
 # -*- coding:utf-8 -*-
 
-import time
-import os
-import sys
+
 import requests
 import warnings
 import unittest
 import allure
 import pytest
-from pprint import pprint
 from config.http_req import Http_Req
 from config import readConfig
 
 read_conf = readConfig.ReadConfig()
 
-sys.path.append("D:\\PycharmProjects\\DX_interfaceTest")
-host = 'http://3.85.16.233:32100'
-host_www = 'http://activity.dreame.com/'
+host = read_conf.get_http_url('host')
+host_www = read_conf.get_http_url('host_www')
 
 
 @allure.feature("Dreame 测试环境  游客登录场景测试")

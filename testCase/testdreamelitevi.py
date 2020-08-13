@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import time
-import os
-import sys
+
 import requests
 import warnings
 import unittest
 import allure
 import pytest
-from pprint import pprint
 from config.http_req import Http_Req
 from config import readConfig
 

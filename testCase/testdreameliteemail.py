@@ -1,20 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import time
-import os
-import sys
+
 import requests
 import warnings
 import unittest
 import allure
 import pytest
-from pprint import pprint
 from config.http_req import Http_Req
 from config import readConfig
 
 read_conf = readConfig.ReadConfig()
-host_lite = 'http://test-api.dreame.com'
+host_lite = read_conf.get_http_url('host_lite')
 
 
 @allure.feature("DreameLite 测试环境  Email登录场景测试")

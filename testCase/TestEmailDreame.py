@@ -5,14 +5,13 @@ import allure
 import requests
 import unittest
 import warnings
-from pprint import pprint
 from config import readConfig
 from config.http_req import Http_Req
 
-host = 'http://3.85.16.233:32100'
-host_comment = 'http://social.dreame.com'
-host_www = 'http://activity.dreame.com'
 read_conf = readConfig.ReadConfig()
+host = read_conf.get_http_url('host')
+host_www = read_conf.get_http_url('host_www')
+host_comment = read_conf.get_http_url('host_comment')
 
 
 @allure.feature("测试 Email登录app进行相关操作")

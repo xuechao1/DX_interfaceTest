@@ -2,18 +2,19 @@
 # -*- coding: utf-8 -*-
 
 import re
-import sys
 import requests
 import unittest
 import pytest
 from pprint import pprint
+from config import readConfig
 
-host = 'http://3.85.16.233:32100'
-host_www = 'http://activity.dreame.com/'
-# sys.path.append("D:\\PycharmProjects\\DX_interfaceTest")
-host_comment = 'http://social.dreame.com'
-host_lite = 'http://test-api.dreame.com'
-host_lite_activity = 'http://test-activity.dreame.com'
+read_conf = readConfig.ReadConfig()
+
+host = read_conf.get_http_url('host')
+host_www = read_conf.get_http_url('host_www')
+host_comment = read_conf.get_http_url('host_comment')
+host_lite = read_conf.get_http_url('host_lite')
+host_lite_activity = read_conf.get_http_url('host_lite_activity')
 
 
 class Http_Req(unittest.TestCase):

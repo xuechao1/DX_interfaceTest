@@ -5,10 +5,10 @@ import time
 import unittest
 from common.configEmail import *
 from HTMLTestRunner import HTMLTestRunner  # 把html的py文件导入到lib文件夹下
-from testCase import TestInnovel
+from testCase import testdreamelitevi
 from testCase import testdreamevisitor
 from testCase import TestEmailDreame
-
+from testCase import testdreameliteemail
 
 class Run_case(object):
 
@@ -20,7 +20,8 @@ class Run_case(object):
         # 从模块中加载，加载test开头的用例
         suite.addTests(ts.loadTestsFromModule(testdreamevisitor))  # 传入模块名--APP游客登录测试脚本名
         suite.addTests(ts.loadTestsFromModule(TestEmailDreame))  # APP邮件登录测试脚本名
-        # suite.addTests(ts.loadTestsFromModule(TestInnovel))
+        suite.addTests(ts.loadTestsFromModule(testdreamelitevi))
+        suite.addTests(ts.loadTestsFromModule(testdreameliteemail))
         """
         执行用例，
         生成用例执行器

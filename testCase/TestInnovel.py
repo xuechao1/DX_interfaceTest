@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 
-import os
 import allure
 import pytest
 import requests
@@ -11,6 +10,8 @@ from config import readConfig
 from config.http_req import Http_Req
 
 read_conf = readConfig.ReadConfig()
+host = read_conf.get_http_url('host')
+host_www = read_conf.get_http_url('host_www')
 
 
 @allure.feature("INNOVEL 测试环境  游客登录场景测试")
@@ -76,10 +77,6 @@ class TestInnovel(unittest.TestCase):
         s = ss + '%3D%3D'
         global timezone
         timezone = 'Asia%2FShanghai'
-        global host
-        host = 'http://3.85.16.233:32100'
-        global host_www
-        host_www = 'http://activity.dreame.com/'
         global type
         type = read_conf.get_login('type')
         global page
