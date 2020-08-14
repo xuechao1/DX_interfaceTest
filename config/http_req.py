@@ -15,6 +15,8 @@ host_www = read_conf.get_http_url('host_www')
 host_comment = read_conf.get_http_url('host_comment')
 host_lite = read_conf.get_http_url('host_lite')
 host_lite_activity = read_conf.get_http_url('host_lite_activity')
+debug = read_conf.get_login_dreame_lite('debug')
+user = read_conf.get_login_dreame_lite('user')
 
 
 class Http_Req(unittest.TestCase):
@@ -123,3 +125,19 @@ class Http_Req(unittest.TestCase):
         except Exception as e:
             print("!!!Warning!!! HTTP请求失败 :%s" % e)
             raise e
+
+    def http_login(self):
+        password = "Yl9E12hQCct758QkTWIYn7LhvbVxkmXYsMlhHTCFGosaOUawl75H3URHpR%2Bl1S1gol8aG49gNfO%2BPGc%2" \
+                   "FX%2FaKPeGG8XbJh4jxKlBK4ioQPAxW3D%2BHmydO%2Fb47nxfKM0VGmpVIuoO0TVHrFh66bblCtLPfA5OwG" \
+                   "EnbJyR%2FTmr5Cas%3D"
+        url = host_lite + f'/api/login?password={password}&user={user}&debug={debug}'
+        self.s = requests.session()
+        result = self.s.get(url)
+        res = result.json()
+        return res
+
+    def login_token(self, name):
+        res = self.http_login()
+        u_1 = res['dataJson']
+        res_u = u_1[name]
+        return res_u

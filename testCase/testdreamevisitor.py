@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 
-
 import requests
 import warnings
 import unittest
@@ -10,9 +9,6 @@ from config.http_req import Http_Req
 from config import readConfig
 
 read_conf = readConfig.ReadConfig()
-
-host = read_conf.get_http_url('host')
-host_www = read_conf.get_http_url('host_www')
 
 
 @allure.feature("Dreame 测试环境  游客登录场景测试")
@@ -29,6 +25,10 @@ class TestDreameVisitorLogin(unittest.TestCase):
         bookshelf1 = "afpUCUXTG5LOtYLQgyOFdw%3D%3D%2CtKIiqGQH9ujzsIerqicrkg%3D%3D%2CtchOexxodN%2FybrimwnB5gw%3D%3D"
         global channel
         channel = read_conf.get_login_dreame('channel')
+        global host
+        host = read_conf.get_http_url('host')
+        global host_www
+        host_www = read_conf.get_http_url('host_www')
         global sign
         sign = read_conf.get_login_dreame('sign')
         global mcc

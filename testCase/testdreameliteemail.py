@@ -11,7 +11,6 @@ from config.http_req import Http_Req
 from config import readConfig
 
 read_conf = readConfig.ReadConfig()
-host_lite = read_conf.get_http_url('host_lite')
 
 
 @allure.feature("DreameLite 测试环境  Email登录场景测试")
@@ -24,6 +23,8 @@ class TestDreameLiteEmail(unittest.TestCase):
         print("----开始执行测试用例  start ----")
         global timezone
         timezone = "Asia%2FShanghai"
+        global host_lite
+        host_lite = read_conf.get_http_url('host_lite')
         global timestamp
         timestamp = read_conf.get_login_dreame_lite('timestamp')
         global interfaceCode
@@ -52,13 +53,14 @@ class TestDreameLiteEmail(unittest.TestCase):
                    "EnbJyR%2FTmr5Cas%3D"
         url = host_lite + f'/api/login?password={password}&user={user}&debug={debug}'
         result = self.s.get(url)
-        t = result.json()
-        u_1 = t['dataJson']
+        res = result.json()
+        print("登录返回值 ：", res)
+        res_sel = res['dataJson']
         # 过滤 u 跟 s
         global u
-        u = u_1['u']
+        u = res_sel['u']
         global s
-        s = u_1['s']
+        s = res_sel['s']
 
     @pytest.mark.skip()
     @allure.story(" ----Email登录----")
@@ -79,6 +81,7 @@ class TestDreameLiteEmail(unittest.TestCase):
     def test_002_case(self):
         url = f"/api/getUserTask?s={s}&u={u}&interfaceCode={interfaceCode}&debug={debug}"
         Http_Req().http_lite_activity_req(url)
+        """---------------------------------------------------------------"""
         url1 = f"/api/getAll?u={u}&s={s}&interfaceCode={interfaceCode}&debug={debug}"
         Http_Req().http_lite_req(url1)
 
@@ -87,8 +90,10 @@ class TestDreameLiteEmail(unittest.TestCase):
         url = f"/calendar/getNewCalendarContent?timezone={timezone}&debug={debug}&u={u}&s={s}" \
               f"&interfaceCode={interfaceCode}"
         Http_Req().http_lite_req(url)
+        """---------------------------------------------------------------"""
         url1 = f"/api/novelRecommend?id={id_email}&s={s}&u={u}&interfaceCode={interfaceCode}&debug={debug}"
         Http_Req().http_lite_req(url1)
+        """---------------------------------------------------------------"""
         url2 = f"/api/readV1?chapterId={chapterId}&bookId={bookId_email}&s={s}&u={u}" \
                f"&interfaceCode={interfaceCode}&debug={debug}"
         Http_Req().http_lite_req(url2)
@@ -108,6 +113,7 @@ class TestDreameLiteEmail(unittest.TestCase):
         url = f"/Message/getSepUnreadMessage?timestamp={timestamp}&u={u}&s={s}" \
               f"&interfaceCode={interfaceCode}&debug={debug}"
         Http_Req().http_lite_req(url)
+        """---------------------------------------------------------------"""
         url1 = f"/Message/getNewMessage?u={u}&s={s}&interfaceCode={interfaceCode}&debug={debug}"
         Http_Req().http_lite_req(url1)
 
@@ -127,6 +133,7 @@ class TestDreameLiteEmail(unittest.TestCase):
     def test_009_case(self):
         url1 = f"/api/getAll?u={u}&s={s}&interfaceCode={interfaceCode}&debug={debug}"
         Http_Req().http_lite_req(url1)
+        """---------------------------------------------------------------"""
         url = f"/api/getUserTask?s={s}&u={u}&interfaceCode={interfaceCode}&debug={debug}"
         Http_Req().http_lite_activity_req(url)
 
@@ -135,8 +142,10 @@ class TestDreameLiteEmail(unittest.TestCase):
         url = f"/Message/getSepUnreadMessage?timestamp={timestamp}&u={u}&s={s}" \
               f"&interfaceCode={interfaceCode}&debug={debug}"
         Http_Req().http_lite_req(url)
+        """---------------------------------------------------------------"""
         url1 = f"/Message/getNewMessage?u={u}&s={s}&interfaceCode={interfaceCode}&debug={debug}"
         Http_Req().http_lite_req(url1)
+        """---------------------------------------------------------------"""
         url2 = f"/Calendar/bookRecommend?s={s}&u={u}&interfaceCode={interfaceCode}&debug={debug}"
         Http_Req().http_lite_req(url2)
 
@@ -167,9 +176,10 @@ class TestDreameLiteEmail(unittest.TestCase):
 
     @allure.story("在书城侧页面，点击右上角的会话按钮，测试其能正常进入到站内信界面的功能")
     def test_015_case(self):
-        url = f"/Message/getSepUnreadMessage?timestamp={timestamp}&u={u}&s={s}&interfaceCode={interfaceCode}" \
-              f"&debug={debug}"
+        url = f"/Message/getSepUnreadMessage?timestamp={timestamp}&u={u}&s={s}" \
+              f"&interfaceCode={interfaceCode}&debug={debug}"
         Http_Req().http_lite_req(url)
+        """---------------------------------------------------------------"""
         url1 = f"/Message/getNewMessage?u={u}&s={s}&interfaceCode={s}&debug={debug}"
         Http_Req().http_lite_req(url1)
 
@@ -187,6 +197,7 @@ class TestDreameLiteEmail(unittest.TestCase):
     def test_017_case(self):
         url = f"/api/search?keywords={keywords}&u={u}&s={s}&debug={debug}"
         Http_Req().http_lite_req(url)
+        """---------------------------------------------------------------"""
         chapterId = "pDnjBuMVTYOpKvc%2Bdnd9fg%3D%3D"
         bookId = "w9v9FBDnzU0JWqLN3uqfYQ%3D%3D"
         url1 = f"/api/readV1?chapterId={chapterId}&bookId={bookId}&s={s}&u={u}" \

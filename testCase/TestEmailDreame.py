@@ -9,9 +9,6 @@ from config import readConfig
 from config.http_req import Http_Req
 
 read_conf = readConfig.ReadConfig()
-host = read_conf.get_http_url('host')
-host_www = read_conf.get_http_url('host_www')
-host_comment = read_conf.get_http_url('host_comment')
 
 
 @allure.feature("测试 Email登录app进行相关操作")
@@ -23,6 +20,12 @@ class TestEmailDreame(unittest.TestCase):
         self.s = requests.session()
         global debug
         debug = read_conf.get_login_dreame('debug')
+        global host
+        host = read_conf.get_http_url('host')
+        global host_www
+        host_www = read_conf.get_http_url('host_www')
+        global host_comment
+        host_comment = read_conf.get_http_url('host_comment')
         global versionCode
         versionCode = read_conf.get_login_dreame('versionCode')
         global content

@@ -5,13 +5,10 @@ import pytest
 import requests
 import warnings
 import unittest
-from pprint import pprint
 from config import readConfig
 from config.http_req import Http_Req
 
 read_conf = readConfig.ReadConfig()
-host = read_conf.get_http_url('host')
-host_www = read_conf.get_http_url('host_www')
 
 
 @allure.feature("INNOVEL 测试环境  游客登录场景测试")
@@ -24,6 +21,10 @@ class TestInnovel(unittest.TestCase):
         print("----开始执行测试用例  start ----")
         global code
         code = read_conf.get_login('code')
+        global host
+        host = read_conf.get_http_url('host')
+        global host_www
+        host_www = read_conf.get_http_url('host_www')
         global login_type
         login_type = read_conf.get_login('login_type')
         global userKeyWithoutImei
